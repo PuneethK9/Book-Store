@@ -21,8 +21,54 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
+    border-radius: 15px;
 }
 
 #logo{
     display: flex;
+}
+
+#szs{
+    font-size: 2rem;
+    padding-top: 3px;
+    color: blueviolet;
+    font-weight: 600;
+    margin-right: 3px;
+}
+
+#lks{
+    display: flex;
+    width: 30%;
+    justify-content: space-evenly;
+}
+
+#icons{
+    font-size: 2.2rem;
+    margin: 0px 2px;
+}
+
+#icons:hover{
+    cursor: pointer;
+    color: blueviolet;
+}
+
+#link{
+    font-size: 1.5rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+#link:hover{
+    cursor: pointer;
+    color: blueviolet;
+}
+
+#hv{
+    display: flex;
+    align-items: center;
+}
+
+#hv:hover{
+    cursor: pointer;
+    color: blueviolet;
 }
