@@ -4,6 +4,8 @@ import "../assets/header.css";
 export default function Header(){
     return (
 
+        
+
         <div className="h-100 w-100">
             <div id="con">
                 <div id="mans">
@@ -29,6 +31,5 @@ export default function Header(){
                 </div>
             </div>
         </div>
-
     )
 }

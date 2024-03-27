@@ -11,7 +11,7 @@
 {
     height: 600px;
     width: 800px;
-    background-color: #e6ecff
+    background-color: #e4ecf9
 }
 
 #photo
@@ -72,4 +72,8 @@ textarea
     display: flex;
     justify-content: space-between;
     border-radius: 8px;
+}
+
+#add{
+    background-color: #5d73c7;
 }

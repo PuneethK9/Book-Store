@@ -9,17 +9,21 @@
 
 #con{
     padding: 10px;
+    display: flex;
+    flex-direction: column;
 }
 
 #sh{
     height: 50px;
     width: 95%;
+    border: 1px solid #f6f6f6;
 }
 
 #items{
     padding: 20px 0px;
     display: flex;
     flex-wrap: wrap;
+    width: 100%;
 }
 
 #search{
@@ -33,7 +37,7 @@
 
 #txt{
     font-size: 0.6rem;
-    color: blueviolet;
+    color: #aaaaaa;
 }
 
 p{
@@ -57,19 +61,24 @@ img{
 }
 
 #card{
-    min-height: 300px;
-    width: 180px;
+    height: 400px;
+    width: 240px;
     padding: 5px 10px;
-    border: 1px solid #e6e6e6;
-    margin: 8px;
+    border: 1px solid #f6f6f6;
+    margin: 15px;
+    border-radius: 10px;
 }
 
 #exs{
     margin: 10px;
+    height: 22%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 
 #col{
-    color: blueviolet;
+    color: blueviolet
 }
 
 #mag{
@@ -78,7 +87,38 @@ img{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #e6e6e6;
+    background-color: blueviolet;
     font-weight: 600;
     font-size: 2rem;
+    color: white;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
 }
+
+#pricecon{
+    display: none;
+}
+
+#card:hover{
+    box-shadow: 0px 0px 20px 5px #F1EAFF;
+    cursor: pointer;
+    transition: 700ms;
+    transform: scale(1.05);
+}
+
+#price{
+    background-color: blueviolet;
+    color: white;
+    width: 100%;
+    height: 40px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+

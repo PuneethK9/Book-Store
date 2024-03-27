@@ -3,10 +3,10 @@ import "../assets/filters.css"
 
 export default function Filters(){
 
-    const [open1,setopen1] = useState(false);
-    const [open2,setopen2] = useState(false);
-    const [open3,setopen3] = useState(false);
-    const [open4,setopen4] = useState(false);
+    const [open1,setopen1] = useState(true);
+    const [open2,setopen2] = useState(true);
+    const [open3,setopen3] = useState(true);
+    const [open4,setopen4] = useState(true);
     
     const [Author,setAuthor] = useState([]);
 
@@ -40,7 +40,7 @@ export default function Filters(){
         <div className="h-100 w-100">
             <div id="con">
                 <div id="fill">
-                    <div id="txts"><h1><b>Filter</b></h1></div>
+                    <div id="txts"><h4><b>Filter Option</b></h4></div>
 
                     <div id="hold">
 

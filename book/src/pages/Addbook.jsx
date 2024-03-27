@@ -158,7 +158,7 @@ export default function Addbook()
                     </div>
 
                     <div>
-                        <button onClick={handleClick} type="button" className="w-100 btn btn-primary text-white"><b>ADD</b></button>
+                        <button id="add" onClick={handleClick} type="button" className="w-100 btn text-white"><b>ADD</b></button>
                     </div>
                 </div>
             </div>

@@ -5,6 +5,7 @@ import {BrowserRouter,Routes,Route} from "react-router-dom"
 import Filters from "./components/filters"
 import Header from "./components/header"
 import Footer from "./components/footer"
+import Storepage from "./pages/storepage"
 
 function App() {
   
@@ -13,7 +14,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/add" element={<Addbook />} />
-        <Route path="/store" element={<Footer />} />
+        <Route path="/store" element={<Storepage />} />
       </Routes>
     </BrowserRouter>
     </>

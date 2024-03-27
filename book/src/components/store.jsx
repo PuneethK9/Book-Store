@@ -9,6 +9,15 @@ export default function Store(){
 
     const [data,setdata] = useState([]);
     const [input,setinput] = useState("");
+    const [nice,setnice] =useState(null);
+
+    function hvr(i){
+        setnice(i);
+    }
+
+    function nohvr(){
+        setnice(null);
+    }
 
     useEffect(function(){
 
@@ -52,14 +61,14 @@ export default function Store(){
                     data.map((item,i)=>{
 
                         return (
-                            <div id="card" key={i}>
+                            <div id="card" onMouseEnter={()=>hvr(i)} onMouseLeave={hvr} key={i}>
                                 <div id="phos">
                                     <img src={item.Image}></img>
                                 </div>
                                 <div id="exs">
                                     <div id="data"><b id="so">{item.Title}</b></div>
 
-                                    <div id="data">
+                                    <div id="data" style={{display:(nice !== i)?"flex":"none"}}>
 
                                         {
                                             item.Genre.map(function(j,i){
@@ -73,7 +82,13 @@ export default function Store(){
 
                                     </div>
 
-                                    <div id="data"><b id="col">&#8377;{item.Price}</b></div>
+                                    <div id="pricecon" style={{display:(nice === i)?"block":"none"}}>
+                                        <button id="price">
+                                            <span style={{marginRight:10}} className="material-symbols-outlined">shopping_cart</span>
+                                            <b>&#8377;{item.Price}</b>
+                                        </button>
+                                    </div>
+                                    
                                 </div>
                             </div>
                         )
