@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../assets/filters.css"
 
-export default function Filters(){
+export default function Filters({Authordata,Genredata}){
 
     const [open1,setopen1] = useState(true);
     const [open2,setopen2] = useState(true);
@@ -9,7 +9,15 @@ export default function Filters(){
     const [open4,setopen4] = useState(true);
     
     const [Author,setAuthor] = useState([]);
+    const [Genre,setGenre] = useState([]);
 
+    useEffect(function(){
+        Authordata(Author);
+    },[Author]);
+
+    useEffect(function(){
+        Genredata(Genre);
+    },[Genre]);
 
     function authorchg(e){
 
@@ -20,7 +28,17 @@ export default function Filters(){
         setAuthor([...Author,value])
         else
         setAuthor(Author.filter(i=>i!==value));
+    }
 
+    function Genrechg(e){
+
+        const value = e.target.value;
+        const chk = e.target.checked;
+
+        if(chk)
+        setGenre([...Genre,value])
+        else
+        setGenre(Genre.filter(i=>i!==value));
     }
 
     function clk1(){
@@ -55,7 +73,27 @@ export default function Filters(){
                             </button>
 
                             <div id="content" style={{display:(open1)? 'block':'none'}}>
-                                <p>wastefellow</p>
+
+                                <label className="d-flex align-items-center">
+                                    <input onClick={Genrechg} value="Horror" id="cks" type="checkbox"></input>
+                                    <span>Horror</span>
+                                </label>
+
+                                <label className="d-flex align-items-center">
+                                    <input onClick={Genrechg} value="Thriller" id="cks" type="checkbox"></input>
+                                    <span>Thriller</span>
+                                </label>
+
+                                <label className="d-flex align-items-center">
+                                    <input onClick={Genrechg} value="Crime" id="cks" type="checkbox"></input>
+                                    <span>Crime</span>
+                                </label>
+
+                                <label className="d-flex align-items-center">
+                                    <input onClick={Genrechg} value="Romantic" id="cks" type="checkbox"></input>
+                                    <span>Romantic</span>
+                                </label>
+                                
                             </div>
                         </div>
 
@@ -73,23 +111,23 @@ export default function Filters(){
 
 
                                 <label className="d-flex align-items-center" >
-                                    <input name="Goku" onClick={authorchg} value="Goku" id="cks" type="checkbox"></input>
-                                    <span>Goku</span>
+                                    <input name="" onClick={authorchg} value="J.K. Rowling" id="cks" type="checkbox"></input>
+                                    <span>J.K. Rowling</span>
                                 </label>
 
                                 <label className="d-flex align-items-center" >
-                                    <input name="Vegeta" onClick={authorchg} value="Vegeta" id="cks" type="checkbox"></input>
-                                    <span>Vegeta</span>
+                                    <input name="" onClick={authorchg} value="Agatha Christie" id="cks" type="checkbox"></input>
+                                    <span>Agatha Christie</span>
                                 </label>
 
                                 <label className="d-flex align-items-center">
-                                    <input onClick={authorchg} value="Gohan" id="cks" type="checkbox"></input>
-                                    <span>Gohan</span>
+                                    <input onClick={authorchg} value="James Clear" id="cks" type="checkbox"></input>
+                                    <span>James Clear</span>
                                 </label>
 
                                 <label className="d-flex align-items-center">
-                                    <input onClick={authorchg} value="Broly" id="cks" type="checkbox"></input>
-                                    <span>Broly</span>
+                                    <input onClick={authorchg} value="Conan Doyle" id="cks" type="checkbox"></input>
+                                    <span>Conan Doyle</span>
                                 </label>
 
                             </div>

@@ -5,11 +5,13 @@ import { useEffect} from "react";
 import axios from "axios";
 
 
-export default function Store(){
+export default function Store({qydata}){
 
     const [data,setdata] = useState([]);
     const [input,setinput] = useState("");
     const [nice,setnice] =useState(null);
+
+    //console.log(qydata);
 
     function hvr(i){
         setnice(i);
@@ -20,16 +22,19 @@ export default function Store(){
     }
 
     useEffect(function(){
-
-        axios.get('http://localhost:4000/store')
+        axios.post('http://localhost:4000/store', qydata)
             .then(res=>{
-                setdata(res.data)
+
+                console.log(res);
+
+                setdata(res.data);
             })
             .catch(err=>{
                 console.log(err);
             })
-    },[])
+    },[qydata]);
 
+    //console.log(qydata);
 
     function search(e){
 
@@ -57,7 +62,9 @@ export default function Store(){
             </div>
             <div id="items">
 
+                
                 {
+                    
                     data.map((item,i)=>{
 
                         return (
@@ -73,9 +80,7 @@ export default function Store(){
                                         {
                                             item.Genre.map(function(j,i){
                                                 return (
-
                                                     (i+1===item.Genre.length) ? <p id="txt" key={i}>{j}</p> : <p id="txt" key={i}>{j},</p>
-                                
                                                 )
                                             })
                                         }
@@ -93,6 +98,7 @@ export default function Store(){
                             </div>
                         )
                     })
+                    
                 }
 
             </div>

@@ -5,6 +5,7 @@
     padding: 0 0;
     margin: 0 0;
     font-family: 'Poppins';
+    --bk : #6b5ed7;
 }
 
 #con{
@@ -74,7 +75,7 @@ img{
     height: 22%;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-evenly;
 }
 
 #col{

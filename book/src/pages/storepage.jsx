@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../assets/storepage.css"
 import Header from "../components/header.jsx"
 import Store from "../components/store.jsx"
@@ -7,6 +7,32 @@ import Footer from "../components/footer.jsx"
 
 
 export default function Storepage(){
+
+    const [qy,setqy] = useState({});
+
+    function Audata(data){
+
+        if(data.length>0)
+        setqy({...qy,Author:data});
+        else
+        {
+            const {Author,...rest} = qy;
+            setqy({...rest});
+        }
+    }
+
+    //console.log(qy);
+
+    function Gdata(data){
+
+        if(data.length>0)
+        setqy({...qy,Genre:data});
+        else
+        {
+            const {Genre,...rest} = qy;
+            setqy({...rest});
+        }
+    }
 
     return (
 
@@ -21,12 +47,12 @@ export default function Storepage(){
                 <div id="mai">
 
                     <div id="fillcol">
-                        <Filters/>
+                        <Filters Authordata={Audata} Genredata={Gdata} />
                     </div>
 
 
                     <div id="books">
-                        <Store/>
+                        <Store qydata={qy} />
                     </div>
 
                 </div>

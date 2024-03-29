@@ -40,6 +40,27 @@ app.get("/store",async function(req,res){
 
 })
 
+app.post("/store",async function(req,res){
+    try{
+        const query = req.body;
+
+        let filter = {};
+
+        if(query.Author)
+        filter.Author = query.Author;
+        if(query.Genre)
+        filter.Genre = {$in : query.Genre};
+
+        const data = await Book.find(filter);
+        console.log(filter);
+        console.log(data);
+        return res.json(data);
+    }
+    catch(err){
+        console.log(err);
+    }
+})
+
 app.post("/add",async function(req,res){
     const title = req.body.Title;
     const author = req.body.Author;
