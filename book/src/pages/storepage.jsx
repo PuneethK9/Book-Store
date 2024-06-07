@@ -21,8 +21,6 @@ export default function Storepage(){
         }
     }
 
-    //console.log(qy);
-
     function Gdata(data){
 
         if(data.length>0)

@@ -7,6 +7,10 @@ import Header from "./components/header"
 import Footer from "./components/footer"
 import Storepage from "./pages/storepage"
 import Desc from "./components/desc"
+import Descpage from "./pages/descpage"
+import Similar from "./components/similar"
+import UserLogin from "./pages/UserLogin"
+import Register from "./pages/Register"
 
 function App() {
   
@@ -16,7 +20,9 @@ function App() {
       <Routes>
         <Route path="/add" element={<Addbook />} />
         <Route path="/store" element={<Storepage />} />
-        <Route path="/desc" element={<Desc />}  />
+        <Route path="/desc/:id" element={<Descpage />}  />
+        <Route path="/URegister" element={<Register />} />
+        <Route path="/ULogin" element={<UserLogin />} />
       </Routes>
     </BrowserRouter>
     </>

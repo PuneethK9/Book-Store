@@ -7,23 +7,26 @@
     height: 100%;
     width: 100%;
     padding: 20px 30px;
+    display: flex;
+    justify-content: center;
 }
 
 #less{
     height: 100%;
-    width: 100%;
+    width: 80%;
     display: flex;
-    border: 1px solid #f6f6f6;
 }
 
 #potos{
-    width: 50%;
+    width: 30%;
     padding: 20px 30px;
+    display: flex;
+    justify-content: center;
 }
 
 #tails{
     padding: 20px 30px;
-    width: 50%;
+    width: 70%;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -32,7 +35,7 @@
 #lab{
     width: 100%;
     display: flex;
-    margin: 20px 0px;
+    margin: 10px 0px;
 }
 
 #lbs{
@@ -52,7 +55,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 20px 0px;
+    margin: 10px 0px;
 }
 
 #pay{
@@ -67,12 +70,17 @@
     border-radius: 10px;
 }
 
+#pay:hover{
+    background-color: rgba(138,43,226,0.8);
+    cursor: pointer;
+}
+
 #unique{
-    margin: 20px 0px;
+    margin: 10px 0px;
 }
 
 #auth{
-    margin: 20px 0px;
+    margin: 10px 0px;
 }
 
 #cst{
@@ -80,4 +88,8 @@
     justify-content: center;
     align-items: center;
     margin: 0px;
+}
+
+#ano{
+    width: 100%;
 }

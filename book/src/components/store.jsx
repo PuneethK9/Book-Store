@@ -3,15 +3,14 @@ import "../assets/store.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect} from "react";
 import axios from "axios";
+import  { Link } from "react-router-dom";
 
 
 export default function Store({qydata}){
 
     const [data,setdata] = useState([]);
     const [input,setinput] = useState("");
-    const [nice,setnice] =useState(null);
-
-    //console.log(qydata);
+    const [nice,setnice] = useState(null);
 
     function hvr(i){
         setnice(i);
@@ -24,17 +23,12 @@ export default function Store({qydata}){
     useEffect(function(){
         axios.post('http://localhost:4000/store', qydata)
             .then(res=>{
-
-                console.log(res);
-
                 setdata(res.data);
             })
             .catch(err=>{
                 console.log(err);
             })
     },[qydata]);
-
-    //console.log(qydata);
 
     function search(e){
 
@@ -70,7 +64,7 @@ export default function Store({qydata}){
                         return (
                             <div id="card" onMouseEnter={()=>hvr(i)} onMouseLeave={hvr} key={i}>
                                 <div id="phos">
-                                    <img src={item.Image}></img>
+                                   <Link to={`/desc/${item._id}`}><img src={item.Image}></img></Link>
                                 </div>
                                 <div id="exs">
                                     <div id="data"><b id="so">{item.Title}</b></div>

@@ -1,7 +1,10 @@
 import React from "react";
 import "../assets/desc.css"
 
-export default function Desc(){
+export default function Desc({data}){
+
+    console.log(data);
+
     return (
 
         <div className="h-100 w-100">
@@ -9,28 +12,50 @@ export default function Desc(){
                 <div id="less">
 
                     <div id="potos">
-                        <img src="https://m.media-amazon.com/images/I/51AG6tWCoVL.jpg"></img>
+                        <img id="ano" src={
+                                    (data) ? data.Image : "Loading"
+                                }></img>
                     </div>
 
                     <div id="tails">
 
-                        <h1 id="unique"><b>Atomic Habits</b></h1>
+                        <h1 id="unique">
+                            <b>
+                                {
+                                    (data) ? data.Title : "Loading"
+                                }
+                            
+                            </b>
+                        </h1>
 
                         <div id="lab">
-                            <label id="lbs">Productivity</label>
-                            <label id="lbs">Management</label>
-                            <label id="lbs">Sharpening</label>
+
+                                {
+                                    (data) ? 
+                                    data.Genre.map(function(item,i){
+                                        return (
+                                            <label id="lbs" key={i}>{item}</label>
+                                        )
+                                    })
+                                    : 
+                                    "Loading"
+                                }
                         </div>
 
                         <div id="des">
                             <p>
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quas possimus, consequuntur tempore necessitatibus nihil at ad iusto repellendus sequi laudantium saepe hic eos commodi architecto labore nam excepturi. Placeat, voluptate!
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem sit quo vel aut sint veritatis consequatur rerum! Distinctio, in possimus eos aliquam officiis nulla eveniet adipisci, maxime dolorem, doloribus ab.
+                                {
+                                    (data) ? data.Description : "Loading"
+                                }
                             </p>
                         </div>
 
                         <div id="auth">
-                            <h6><b>James Clear</b></h6>
+                            <h6><b>
+                                {
+                                    (data) ? data.Author : "Loading"
+                                }
+                                </b></h6>
                         </div>
 
                         <div id="pri">
@@ -38,7 +63,9 @@ export default function Desc(){
                                 <span style={{marginRight:10}} className="material-symbols-outlined">shopping_cart</span>
                                 <b>Add to Cart</b>
                             </button>
-                            <h5 id="cst"><b>&#8377;449</b></h5>
+                            <h4 id="cst"><b>&#8377;{
+                                    (data) ? data.Price : "Loading"
+                                }</b></h4>
                         </div>
 
                     </div>
