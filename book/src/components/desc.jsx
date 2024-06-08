@@ -1,9 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../assets/desc.css"
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-export default function Desc({data}){
+export default function Desc({data,notdata}){
 
-    console.log(data);
+    const [Auth,setAuth] = useState(localStorage.getItem('token'));
+    const [not,setnot] = useState(false);
+    const navigate = useNavigate();
+
+    useEffect(()=>{
+        notdata(not);
+    },[not])
+
+    function handleclick(eve)
+    {
+        if(!Auth)
+        return navigate("/ULogin");
+
+        axios.post("http://localhost:4000/favs",data,{
+            headers:{
+                'token':Auth
+            }
+        })
+        .then(res=>{
+            console.log(res);
+            if(res.data.status==909)
+            {
+                localStorage.clear();
+                return navigate("/ULogin");
+            }
+        })
+        .catch(err=>{
+            console.log("Error sending Favourite requests");
+        })
+        setnot(true);        
+    }
 
     return (
 
@@ -59,10 +91,19 @@ export default function Desc({data}){
                         </div>
 
                         <div id="pri">
-                            <button id="pay">
-                                <span style={{marginRight:10}} className="material-symbols-outlined">shopping_cart</span>
-                                <b>Add to Cart</b>
-                            </button>
+
+                            <div id="descstore">
+
+                                <button id="pay">
+                                    <span style={{marginRight:10}} className="material-symbols-outlined">shopping_cart</span>
+                                    <b>Add to Cart</b>
+                                </button>
+
+                                <button onClick={handleclick} id="favsbtn" type="button">
+                                    <span id="descfavs" className="material-symbols-outlined">favorite</span>
+                                </button>
+
+                            </div>
                             <h4 id="cst"><b>&#8377;{
                                     (data) ? data.Price : "Loading"
                                 }</b></h4>

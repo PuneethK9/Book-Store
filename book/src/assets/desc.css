@@ -93,3 +93,25 @@
 #ano{
     width: 100%;
 }
+
+#descstore{
+    width: 255px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#descfavs
+{
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid #f6f6f6;
+}
+
+#favsbtn{
+    width: 50px;
+    border: none;
+}

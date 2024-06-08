@@ -1,5 +1,6 @@
 import React from "react";
 import "../assets/similar.css";
+import { Link } from "react-router-dom";
 
 export default function Similar({data}){
     return (
@@ -16,9 +17,9 @@ export default function Similar({data}){
 
                                 return (
 
-                                    <div id="boook">
-                                        <div id="ps" key={i}>
-                                            <img id="here" src={item.Image}></img>
+                                    <div id="boook" key={i}>
+                                        <div id="ps">
+                                            <Link to={`/desc/${item._id}`}><img id="here" src={item.Image}></img></Link>
                                         </div>
 
                                         <div id="look">

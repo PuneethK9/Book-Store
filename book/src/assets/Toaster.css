@@ -1,0 +1,15 @@
+
+
+#toastsz{
+    height: 8px;
+    width: 8px;
+    background-color: red;
+    border-radius: 5px;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+}
+
+#hv{
+    position: relative;
+}

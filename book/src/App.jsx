@@ -11,6 +11,9 @@ import Descpage from "./pages/descpage"
 import Similar from "./components/similar"
 import UserLogin from "./pages/UserLogin"
 import Register from "./pages/Register"
+import Favs from "./components/favs"
+import Favspage from "./pages/Favspage"
+import Toaster from "./components/Toaster"
 
 function App() {
   
@@ -23,6 +26,7 @@ function App() {
         <Route path="/desc/:id" element={<Descpage />}  />
         <Route path="/URegister" element={<Register />} />
         <Route path="/ULogin" element={<UserLogin />} />
+        <Route path="/Favs" element={<Favspage />} />
       </Routes>
     </BrowserRouter>
     </>

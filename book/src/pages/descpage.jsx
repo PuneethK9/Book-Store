@@ -13,6 +13,7 @@ export default function Descpage(){
     const { id } = useParams();
     const [ book,setbook] = useState(null);
     const [oth,setoth] = useState(null);
+    const [notify,setnotify] = useState(false);
 
     useEffect(function(){
 
@@ -25,18 +26,23 @@ export default function Descpage(){
             .catch(err=>{
                 console.log(err);
             })
-    },[]);
+    },[id]);
+
+    function nicedata(data)
+    {
+        setnotify(data);
+    }
 
     return (
         <div className="h-100 w-100">
             <div id="header">
-                <Header/>
+                <Header data={notify} />
             </div>
 
             <div id="cons">
 
                 <div id="nice1">
-                    <Desc data={book} />
+                    <Desc data={book} notdata={nicedata}  />
                 </div>
 
                 <div id="nice2">

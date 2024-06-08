@@ -102,16 +102,11 @@ function UserToken(req,res,next)
 {
     const token = req.headers.token;
 
-    if(token===undefined)
-    {
-        return res.json({Auth:""});
-    }
-
     jwt.verify(token,jwtkey,function(err,user){
 
         if(err){
             console.log(err);
-            return res.json({Auth:""});
+            return res.json({Auth:"",status:909});
         }
         req.user=user;
 
@@ -127,6 +122,31 @@ function UserToken(req,res,next)
 
 
 // USER INTERFACE
+
+app.get("/Favs",UserToken,async function(req,res){
+
+    try {
+
+        const user = req.user.userid;
+
+        const Data=[];
+
+        const userdata = await User.findOne({_id:user});
+        const vals = userdata.Favourites;
+
+        for(const val of vals)
+        {
+            const info = await Book.findOne({_id:val.Bookid});
+            Data.push(info);
+        }
+        return res.json({data:Data});
+    }
+    catch(err){
+        console.log(err);
+        console.log("Error Fetching Fvaourites List");
+    }
+
+})
 
 app.get("/store",UserToken,async function(req,res){
 
@@ -191,7 +211,7 @@ app.post("/ULogin",async function(req,res){
         {
             //console.log("Access Granted");
 
-            const token = jwt.sign({userid:data._id,username:data.Firstname,role:"User",status:data.Status},jwtkey,{expiresIn:"1h"});
+            const token = jwt.sign({userid:data._id,username:data.Firstname,role:"User",status:data.Status},jwtkey,{expiresIn:3600});
             return res.json({token:token});
         }
         else
@@ -229,6 +249,48 @@ app.post("/URegister",async function(req,res){
 
 })
 
+app.post("/favs",UserToken,async function(req,res){
+
+    try{
+        const user = req.user.userid;
+        const proid = req.body._id;
+
+        const chk = await User.findOne({_id:user,'Favourites.Bookid':proid});
+        const pro = await Book.findOne({_id:proid});
+
+        if(!chk)
+        val = await User.updateOne({_id:user},{$push:{Favourites:{Bookname:pro.Title,Bookid:pro._id}}});
+
+        return res.json({message:"Success"});
+    }
+    catch(err){
+        console.log("Error Adding to Favourites List");
+        console.log(err);
+    }
+})
+
+app.delete("/Favs",UserToken,async function(req,res){
+
+    try{
+
+        const user = req.user.userid;
+        const proid = req.body.pro;
+        let val;
+
+        console.log(proid);
+
+        if(proid)
+        val = await User.updateOne({_id:user},{$pull:{Favourites:{Bookid:proid}}});
+
+        return res.json({message:"success",data:val});
+
+    }
+    catch(err){
+        console.log("Error deleting the Book");
+        console.log(err);
+    }
+
+})
 
 
 // ADMIN INTERFACE

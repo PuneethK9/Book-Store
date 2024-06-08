@@ -1,0 +1,111 @@
+
+
+#favscon{
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+}
+
+#favsmain{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    padding: 1% 2%;
+}
+
+#favsitems{
+    height: 100%;
+    width: 23%;
+    background-color: white;
+    margin-right: 40px;
+    border: 1px solid #f6f6f6;
+    border-radius: 20px;
+    position: relative;
+}
+
+#favsitems:hover{
+    box-shadow: 0px 0px 20px 5px #F1EAFF;
+    cursor: pointer;
+    transition: 700ms;
+    transform: scale(1.05);
+}
+
+#favspho{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#favsimg{
+    height: 40%;
+}
+
+#favsdata{
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 60%;
+}
+
+#favsphoto{
+    width: 40%;
+    height: 100%;
+    padding: 8px 0px;
+}
+
+#favsft{
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+#genbtn{
+    background-color: rgba(138, 43, 226, 0.1);
+    height: 22px;
+    width: 80px;
+    text-align: center;
+    border-radius: 10px;
+    margin-right: 10px;
+    color: blueviolet;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+}
+
+#favssz{
+    font-size: 0.8rem;
+}
+
+#favsdeslen{
+    height: 70px;
+    width: 100%;
+    overflow: hidden;
+}
+
+#favsbtns{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#cart{
+    background-color: blueviolet;
+    color: white;
+    height: 35px;
+    width: 150px;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.8rem;
+}
+
+#favsclose{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+#closebtn{
+    font-size: 2.3rem;
+}
