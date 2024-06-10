@@ -100,6 +100,8 @@ const Payment = new mongoose.model("Payment",Paymentschema);
 
 function UserToken(req,res,next)
 {
+    //console.log(req.headers);
+
     const token = req.headers.token;
 
     jwt.verify(token,jwtkey,function(err,user){
@@ -122,6 +124,52 @@ function UserToken(req,res,next)
 
 
 // USER INTERFACE
+
+app.get("/cart",UserToken,async function(req,res){
+
+    try{
+
+        const user = req.user.userid;
+
+        const data = await Cart.aggregate([
+            {
+                $lookup:{
+                    from:"books",
+                    localField:"Bookid",
+                    foreignField:"_id",
+                    as:"news"
+                }
+            },
+            {
+                $unwind:"$news"
+            },
+            {
+                $match:{Userid:new ObjectId(user)}
+            },
+            {
+                $group:{
+
+                    _id:"$Bookid",
+                    news:{$first:"$news"},
+                    count:{$sum:1},
+                    Total:{$sum:"$Price"},
+                    Discount:{$sum:"$news.Discount"}
+                }
+            },
+            {
+                $sort:{"news.Title":1}
+            }
+        ]);
+        //console.log(data);
+
+        return res.json({data:data});
+    }
+    catch(err){
+        console.log("Error Getting Cart List");
+        console.log(err);
+    }
+
+})
 
 app.get("/Favs",UserToken,async function(req,res){
 
@@ -269,6 +317,89 @@ app.post("/favs",UserToken,async function(req,res){
     }
 })
 
+app.post("/cart",UserToken,async function(req,res){
+
+    try{
+
+        const user = req.user.userid;
+        const qty = req.body.Quantity;
+        const Bookid = req.body.Book._id;
+        const pri = req.body.Book.Price;
+
+        if(Bookid)
+        {
+            let chk = await Cart.find({Userid:user,Bookid:Bookid}).countDocuments();
+            let lim = await Book.findOne({_id:Bookid});
+            let nice = Number(lim.Stock);
+            let last = Number(qty)+Number(chk);
+
+            if(last>nice)
+            return res.json({message:"Limit Exceeded"});
+
+            for(let i=0;i<qty;i++)
+            {
+                const newCart = new Cart({
+                    Bookid : Bookid,
+                    Userid : user,
+                    Price : pri
+                });
+    
+                const val = await newCart.save();
+            }
+            return res.json({message:"success"})
+        }
+        return res.json({message:"Null ochindhi Bro"});
+    }
+    catch(err){
+        console.log("Error Adding to Cart");
+        console.log(err);
+    }
+
+})
+
+app.put("/cart",UserToken,async function(req,res){
+
+    try{
+
+        const user = req.user.userid;
+        const bookid = req.body.Book.news._id;
+        const qty = req.body.Quantity;
+
+        const data = await Cart.find({Bookid:bookid,Userid:user}).countDocuments();
+        let val = qty - data;
+
+        if(val<0)
+        {
+            val = val *-1;
+
+            for(let i=0;i<val;i++)
+            {
+                const some = await Cart.deleteOne({Userid:user,Bookid:bookid});
+            }
+            return res.json({message:"deleted"});
+        }
+        else
+        {
+            for(let i=0;i<val;i++)
+            {
+                const newCart = new Cart({
+                    Bookid:bookid,
+                    Userid:user,
+                    Price:req.body.Book.news.Price
+                });
+
+                const val = await newCart.save();
+            }
+            return res.json({message:"success"});
+        }
+    }
+    catch(err){
+        console.log("Error Deleting Elements");
+        console.log(err);
+    }
+
+})
+
 app.delete("/Favs",UserToken,async function(req,res){
 
     try{
@@ -287,6 +418,34 @@ app.delete("/Favs",UserToken,async function(req,res){
     }
     catch(err){
         console.log("Error deleting the Book");
+        console.log(err);
+    }
+
+})
+
+app.delete("/cart",UserToken,async function(req,res){
+
+    try{
+
+        const user = req.user.userid;
+        const data = req.body.del;
+
+        if(data)
+        {
+            //console.log(data);
+            const ct = await Cart.find({Bookid:data.news._id,Userid:user}).countDocuments();
+
+            for(let i=0;i<ct;i++)
+            {
+                const val = await Cart.deleteOne({Bookid:data.news._id,Userid:user});
+            }
+            //console.log("done");
+            return res.json({message:"success"});
+        }
+        return res.json({message:"Null"});
+    }
+    catch(err){
+        console.log("Error Deleting Cart list");
         console.log(err);
     }
 

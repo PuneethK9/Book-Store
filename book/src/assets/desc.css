@@ -68,6 +68,7 @@
     color: white;
     border: 1px solid #f6f6f6;
     border-radius: 10px;
+    margin: 0xp 3px;
 }
 
 #pay:hover{
@@ -95,7 +96,7 @@
 }
 
 #descstore{
-    width: 255px;
+    width: 325px;
     display: flex;
     justify-content: space-between;
 }
@@ -114,4 +115,18 @@
 #favsbtn{
     width: 50px;
     border: none;
+}
+
+#descsel{
+    width: 70px;
+    height: 50px;
+    outline: none;
+    border: 2px solid #f6f6f6;
+    margin-right: 2px;
+    padding: 2px 5px;
+}
+
+#descopt{
+    display: flex;
+    align-items: center;
 }

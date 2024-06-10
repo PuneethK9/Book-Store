@@ -2,20 +2,25 @@ import React, { useEffect, useState } from "react";
 import "../assets/favs.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Quantity from "./Quantity";
 
 
-export default function Favs()
+export default function Favs({cartdata})
 {
     const [data,setdata] = useState([]);
     const [pro,setpro] = useState(null);
     const [now,setnow] = useState(true);
+    const [cart,setcart] = useState(null);
+    const [cartst,setcartst] = useState(false);
 
     const navigate = useNavigate();
 
     if(now)
     {
-        if(!(localStorage.getItem('token')))
-        return navigate("/ULogin");
+        console.log(localStorage.getItem('token'));
+
+        //if(!(localStorage.getItem('token')))
+        //return navigate("/ULogin");
             
         axios.get("http://localhost:4000/Favs",{
             headers:{
@@ -68,6 +73,32 @@ export default function Favs()
             })
 
     },[pro]);
+
+    useEffect(()=>{
+        if(cart)
+        {
+            axios.post("http://localhost:4000/cart",{Quantity:1,Book:cart},{
+                headers:{
+                    'token':localStorage.getItem('token')
+                }
+            })
+            .then((res)=>{
+                console.log(res);
+
+                if(res.data.status==909)
+                {
+                    localStorage.clear();
+                    return navigate("/ULogin");
+                }
+            })
+            .catch((err)=>{
+                console.log("Error Adding to Cart from Favourites");
+                console.log(err);
+            })
+            setcartst(true);
+            cartdata(true);
+        }
+    },[cart]);
 
     return (
         <div id="favscon">
@@ -129,8 +160,8 @@ export default function Favs()
                                 </div>
 
                                 <div id="favsbtns">
-                                        <button id="cart" type="button"><b>Add to Cart</b></button>
-                                        <label><b>&#8377;{item.Price}</b></label>
+                                        <button onClick={()=>{setcart(item)}} id="cart" type="button"><b>Add to Cart</b></button>
+                                        <label><b>&#8377;{item.Price-item.Discount}</b></label>
                                 </div>
                             </div>
                         </div>

@@ -6,9 +6,19 @@ import Filters from "../components/filters.jsx"
 import Footer from "../components/footer.jsx"
 
 
-export default function Storepage(){
+export default function Storepage({data,updata,cartdata,maincartdata}){
 
     const [qy,setqy] = useState({});
+    const [newdata,setnewdata] = useState(false);
+    const [cartst,setcartst] = useState(false);
+
+    useEffect(()=>{
+        setnewdata(data);
+    },[data])
+
+    useEffect(()=>{
+        setcartst(cartdata);
+    },[cartdata]);
 
     function Audata(data){
 
@@ -32,6 +42,17 @@ export default function Storepage(){
         }
     }
 
+    function nicedata(data)
+    {
+        updata(data);
+    }
+
+    function cartupdata(data)
+    {
+        setcartst(data);
+        maincartdata(data);
+    }
+
     return (
 
         <div>
@@ -39,7 +60,7 @@ export default function Storepage(){
             <div className="h-100 w-100">
 
                 <div id="header">
-                    <Header/>
+                    <Header data={newdata} negdata={nicedata} cartdata={cartst} cartupdata={cartupdata}/>
                 </div>
 
                 <div id="mai">

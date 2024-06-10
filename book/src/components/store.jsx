@@ -84,7 +84,7 @@ export default function Store({qydata}){
                                     <div id="pricecon" style={{display:(nice === i)?"block":"none"}}>
                                         <button id="price">
                                             <span style={{marginRight:10}} className="material-symbols-outlined">shopping_cart</span>
-                                            <b>&#8377;{item.Price}</b>
+                                            <b>&#8377;{item.Price-item.Discount}</b>
                                         </button>
                                     </div>
                                     

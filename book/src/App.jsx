@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import Addbook from "./pages/Addbook" 
 import Store from "./components/store"
 import {BrowserRouter,Routes,Route} from "react-router-dom"
@@ -14,19 +14,35 @@ import Register from "./pages/Register"
 import Favs from "./components/favs"
 import Favspage from "./pages/Favspage"
 import Toaster from "./components/Toaster"
+import Cart from "./components/Cart"
+import Cartpage from "./pages/Cartpage"
 
 function App() {
+
+  const [yes,setyes] = useState(false);
+  const [cartst,setcartst] = useState(false);
+
+  function fun(data)
+  {
+    setyes(data);
+  }
+
+  function cartdata(data)
+  {
+    setcartst(data);
+  }
   
   return (
     <>
     <BrowserRouter>
       <Routes>
         <Route path="/add" element={<Addbook />} />
-        <Route path="/store" element={<Storepage />} />
-        <Route path="/desc/:id" element={<Descpage />}  />
+        <Route path="/store" element={<Storepage data={yes} updata={fun} cartdata={cartst} maincartdata={cartdata}/>} />
+        <Route path="/desc/:id" element={<Descpage maindata={fun} updata={yes} nowdata={cartdata} />}  />
         <Route path="/URegister" element={<Register />} />
         <Route path="/ULogin" element={<UserLogin />} />
-        <Route path="/Favs" element={<Favspage />} />
+        <Route path="/Favs" element={<Favspage updata={fun} cartdata={cartst} maincartdata={cartdata}/>} />
+        <Route path="/cart" element={<Cartpage data={yes} nicedata={fun} />} />
       </Routes>
     </BrowserRouter>
     </>

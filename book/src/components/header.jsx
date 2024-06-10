@@ -4,14 +4,19 @@ import {Link} from "react-router-dom"
 import axios from "axios"
 import Toaster from "./Toaster";
 
-export default function Header({data}){
+export default function Header({data,negdata,cartdata,cartupdata}){
 
     const [Auth,setAuth] = useState("");
     const [tol,settol] = useState(false);
+    const [cartst,setcartst] = useState(false);
 
     useEffect(()=>{
         settol(data);
     },[data]);
+
+    useEffect(()=>{
+        setcartst(cartdata);
+    },[cartdata]);
 
     useEffect(function(){
 
@@ -38,7 +43,13 @@ export default function Header({data}){
     },[]);
 
     function chgclick(){
+        negdata(false);
         settol(false);
+    }
+
+    function cartclick(){
+        cartupdata(false);
+        setcartst(false);
     }
 
     return (
@@ -55,16 +66,24 @@ export default function Header({data}){
                         <div id="hv"><label id="link">Home</label></div>
                         <Link style={{textDecoration:"none",color:"black"}} to="/store"><div id="hv"><label id="link">Store</label></div></Link>
 
-                        <Link onClick={chgclick} style={{textDecoration:"none",color:"black"}} to="/Favs">
+                        <Link style={{textDecoration:"none",color:"black"}} to="/Favs">
                             <div id="hv">
                             {
                                 (tol)?<div id="toastsz"></div> :""
                             }
-                            <label id="link"><span id="icons" className="material-symbols-outlined">favorite</span>
+                            <label id="link"><span onClick={chgclick} id="icons" className="material-symbols-outlined">favorite</span>
                             </label></div>
                         </Link>
-
-                        <div id="hv"><label id="link"><span id="icons" className="material-symbols-outlined">shopping_cart</span></label></div>
+                        
+                        <Link to="/cart" style={{textDecoration:"none",color:"black"}}>
+                            
+                            <div id="hv">
+                                {
+                                    (cartst)?<div id="toastsz"></div> : ""
+                                }
+                                <label id="link"><span onClick={cartclick} id="icons" className="material-symbols-outlined">shopping_cart</span></label>
+                            </div>
+                        </Link>
                         <div id="hv">
                             <label id="link">
                                 <span id="icons" className="material-symbols-outlined">account_circle</span>

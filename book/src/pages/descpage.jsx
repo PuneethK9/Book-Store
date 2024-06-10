@@ -8,11 +8,12 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 
 
-export default function Descpage(){
+export default function Descpage({maindata,updata,nowdata}){
 
     const { id } = useParams();
     const [ book,setbook] = useState(null);
     const [oth,setoth] = useState(null);
+    const [cartst,setcartst] = useState(false);
     const [notify,setnotify] = useState(false);
 
     useEffect(function(){
@@ -28,21 +29,32 @@ export default function Descpage(){
             })
     },[id]);
 
+    useEffect(()=>{
+        setnotify(updata);
+    },[updata])
+
     function nicedata(data)
     {
         setnotify(data);
+        maindata(data);
+    }
+
+    function cartdata(data)
+    {
+        setcartst(data);
+        nowdata(data);
     }
 
     return (
         <div className="h-100 w-100">
             <div id="header">
-                <Header data={notify} />
+                <Header data={notify} negdata={nicedata} cartdata={cartst} cartupdata={cartdata}/>
             </div>
 
             <div id="cons">
 
                 <div id="nice1">
-                    <Desc data={book} notdata={nicedata}  />
+                    <Desc data={book} notdata={nicedata} updata={cartdata}  />
                 </div>
 
                 <div id="nice2">
