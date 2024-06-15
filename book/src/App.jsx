@@ -16,6 +16,9 @@ import Favspage from "./pages/Favspage"
 import Toaster from "./components/Toaster"
 import Cart from "./components/Cart"
 import Cartpage from "./pages/Cartpage"
+import Review from "./components/Review"
+import Reviewform from "./components/Reviewform"
+import Star from "./components/star"
 
 function App() {
 
@@ -36,7 +39,7 @@ function App() {
     <>
     <BrowserRouter>
       <Routes>
-        <Route path="/add" element={<Addbook />} />
+        <Route path="/add" element={<Star />} />
         <Route path="/store" element={<Storepage data={yes} updata={fun} cartdata={cartst} maincartdata={cartdata}/>} />
         <Route path="/desc/:id" element={<Descpage maindata={fun} updata={yes} nowdata={cartdata} />}  />
         <Route path="/URegister" element={<Register />} />

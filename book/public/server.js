@@ -408,7 +408,7 @@ app.delete("/Favs",UserToken,async function(req,res){
         const proid = req.body.pro;
         let val;
 
-        console.log(proid);
+        //console.log(proid);
 
         if(proid)
         val = await User.updateOne({_id:user},{$pull:{Favourites:{Bookid:proid}}});

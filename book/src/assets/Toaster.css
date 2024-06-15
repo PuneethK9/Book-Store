@@ -13,3 +13,9 @@
 #hv{
     position: relative;
 }
+
+#chk{
+    width: 100%;
+    height: 695px;
+    background-color: red;
+}
