@@ -74,11 +74,11 @@ export default function Descpage({maindata,updata,nowdata}){
             </div>
             
             <div id="rev">
-                <Review formData={fundata} />
+                <Review data={book} revst={st} formData={fundata} />
             </div>
 
             {
-                (st)?<Reviewform updata={formstdata} />:""
+                (st)?<Reviewform data={book} updata={formstdata} />:""
             }
 
             <div id="footer">

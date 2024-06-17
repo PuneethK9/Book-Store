@@ -59,7 +59,7 @@ const Reviewschema={
     Bookid:ObjectId,
     Userid:ObjectId,
     Username:String,
-    Rating:Decimal128,
+    Rating:Number,
     Description:String
 }
 
@@ -124,6 +124,25 @@ function UserToken(req,res,next)
 
 
 // USER INTERFACE
+
+app.get("/rev",async function(req,res){
+
+    try{
+        const bookid = req.query.Data._id;
+
+        if(bookid)
+        {
+            const data = await Review.find({Bookid:bookid});
+
+            return res.json({data:data});
+        }
+        return res.json({message:"Null"});
+    }
+    catch(err){
+        console.log("Error getting Reviews");
+        console.log(err);
+    }
+})
 
 app.get("/cart",UserToken,async function(req,res){
 
@@ -355,6 +374,49 @@ app.post("/cart",UserToken,async function(req,res){
         console.log(err);
     }
 
+})
+
+app.post("/rev",UserToken,async function(req,res){
+
+    try{
+
+        const user = req.user.userid;
+        const username = req.user.username;
+        const Bookid = req.body.Bookid._id;
+        const Rating = req.body.Rating;
+        const des = req.body.Description;
+
+        if(Bookid)
+        {
+            const chk = await Review.findOne({Userid:user,Bookid:Bookid});
+
+            if(chk)
+            del = await Review.deleteOne({_id:chk._id});
+
+            const orders=true;
+
+            if(orders)
+            {
+                const newrev = new Review({
+                    Bookid:Bookid,
+                    Userid:user,
+                    Username:username,
+                    Rating:Rating,
+                    Description:des
+                });
+
+                const done = await newrev.save();
+
+                return res.json({message:"success"});
+            }
+            return res.json({message:"Buy the Book First"});
+        }
+        return res.json({message:"Null"});
+    }
+    catch(err){
+        console.log("Error Adding Review");
+        console.log(err);
+    }
 })
 
 app.put("/cart",UserToken,async function(req,res){

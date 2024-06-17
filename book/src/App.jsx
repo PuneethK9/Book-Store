@@ -39,7 +39,7 @@ function App() {
     <>
     <BrowserRouter>
       <Routes>
-        <Route path="/add" element={<Star />} />
+        <Route path="/add" element={<Addbook />} />
         <Route path="/store" element={<Storepage data={yes} updata={fun} cartdata={cartst} maincartdata={cartdata}/>} />
         <Route path="/desc/:id" element={<Descpage maindata={fun} updata={yes} nowdata={cartdata} />}  />
         <Route path="/URegister" element={<Register />} />

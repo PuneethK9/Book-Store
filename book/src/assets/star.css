@@ -1,12 +1,17 @@
-
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css");
 
 #starcon{
-    
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
+
 #staricon{
-    width: 200px;
-    height: 200px;
-    background-color: yellow;
-    color: red;
+    color: #e6e6e6;
+}
+
+#staricon:hover{
+    cursor: pointer;
 }

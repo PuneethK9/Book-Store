@@ -59,6 +59,10 @@
     border-radius: 10px;
 }
 
+#revsbt:hover{
+    opacity: 80%;
+}
+
 #revcnl{
     background-color: white;
     border: none;
