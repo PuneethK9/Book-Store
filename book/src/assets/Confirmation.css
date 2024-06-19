@@ -1,0 +1,45 @@
+
+
+#warning{
+    width: 500px;
+    height: 300px;
+    background-color: white;
+    border: 2px solid #f6f6f6;
+    border-radius: 15px;
+}
+
+#warnicon{
+    font-size: 8rem;
+}
+
+#warnsym{
+    height: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#warncontent{
+    width: 100%;
+    height: 25%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+#warnbtns{
+    width: 100%;
+    height: 12%;
+    display: flex;
+    justify-content: center;
+}
+
+#confirmwin{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    background-color: rgba(0,0,0,0.5);
+}

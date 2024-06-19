@@ -74,9 +74,18 @@ const Ordersschema={
     Amount:Number,
     Date:String
 }
-
+ 
 const Itemschema={
-    Bookid:ObjectId,
+    Bookid:ObjectId,  
+    Title:String,
+    Author:String,
+    Publisher:String,
+    Price:Number,
+    Stock:Number,
+    Discount:Number,
+    Genre:[String],
+    Image:String,
+    Description:String,
     Orderid:ObjectId,
     Userid:ObjectId,
     Price:Number
@@ -204,7 +213,12 @@ app.get("/Favs",UserToken,async function(req,res){
         for(const val of vals)
         {
             const info = await Book.findOne({_id:val.Bookid});
+            if(info)
             Data.push(info);
+            else
+            {
+                const nice = await User.updateOne({_id:user},{$pull:{Favourites:{Bookid:val.Bookid}}});
+            }
         }
         return res.json({data:Data});
     }
@@ -256,6 +270,7 @@ app.post("/store",async function(req,res){
 
         const data = await Book.find(filter);
         //console.log(filter);
+        //console.log(data);
         //console.log(data);
         return res.json(data);
     }
@@ -516,6 +531,21 @@ app.delete("/cart",UserToken,async function(req,res){
 
 // ADMIN INTERFACE
 
+app.get("/users",async function(req,res){
+
+    try{
+
+        const data = await User.find({});
+        return res.json({data:data});
+
+    }
+    catch(err){
+        console.log("Error getting users");
+        console.log(err);
+    }
+
+})
+
 app.post("/add",async function(req,res){
     const title = req.body.Title;
     const author = req.body.Author;
@@ -544,6 +574,82 @@ app.post("/add",async function(req,res){
         return res.json();
     }
     catch(err){
+        console.log(err);
+    }
+})
+
+app.put("/book",async function(req,res){
+
+    try{
+
+        const data = req.body.input;
+
+        if(data)
+        {
+            const val = await Book.updateOne({_id:data._id},{$set:data});
+
+            return res.json({message:"success"});
+        }
+        return res.json({message:"Null"});
+    }
+    catch(err){
+        console.log("Error Updating Data");
+        console.log(err);
+    }
+
+})
+
+app.put("/status",async function(req,res){
+
+    try{
+        
+        const user = req.body.del;
+
+        if(user)
+        {
+            const st = await User.findOne({_id:user});
+            const value = !(st.Status);
+            const val = await User.updateOne({_id:user},{$set:{Status:value}});
+
+            return res.json({message:"success"});
+        }
+        return res.json({message:"Null"});
+    }
+    catch(err){
+        console.log("Error Blocking User");
+        console.log(err);
+    }
+})
+
+app.delete("/book",async function(req,res){
+
+    try{
+
+        const book = req.body.del;
+
+        if(book)
+        {
+            const val1 = await Book.deleteOne({_id:book._id});
+            const vals = await Cart.find({Bookid:book._id}).countDocuments();
+
+            for(let i=0;i<vals;i++)
+            {
+                const valnxt = await Cart.deleteOne({Bookid:book._id});
+            }
+
+            const val2 = await Review.find({Bookid:book._id}).countDocuments();
+
+            for(let i=0;i<val2;i++)
+            {
+                const valref = await Review.deleteOne({Bookid:book._id});
+            }
+            return res.json({message:"success"});
+
+        }
+        return res.json({message:"Null"});
+    }
+    catch(err){
+        console.log("Error Deleting Book");
         console.log(err);
     }
 })

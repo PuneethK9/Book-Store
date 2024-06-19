@@ -130,3 +130,9 @@
     display: flex;
     align-items: center;
 }
+
+#phidden{
+    overflow: hidden;
+    height: 140px;
+    
+}

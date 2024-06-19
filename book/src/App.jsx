@@ -19,6 +19,15 @@ import Cartpage from "./pages/Cartpage"
 import Review from "./components/Review"
 import Reviewform from "./components/Reviewform"
 import Star from "./components/star"
+import Allproducts from "./components/Allproducts"
+import Adminheader from "./components/Adminheader"
+import Users from "./components/Users"
+import Updateform from "./components/Updateform"
+import Confirmation from "./components/Confirmation"
+import Viewform from "./components/Viewform"
+import Adminhomepage from "./pages/Adminhomepage"
+import Userspage from "./pages/Userspage"
+import Adding from "./pages/Adding"
 
 function App() {
 
@@ -39,13 +48,15 @@ function App() {
     <>
     <BrowserRouter>
       <Routes>
-        <Route path="/add" element={<Addbook />} />
+        <Route path="/add" element={<Adding />} />
         <Route path="/store" element={<Storepage data={yes} updata={fun} cartdata={cartst} maincartdata={cartdata}/>} />
         <Route path="/desc/:id" element={<Descpage maindata={fun} updata={yes} nowdata={cartdata} />}  />
         <Route path="/URegister" element={<Register />} />
         <Route path="/ULogin" element={<UserLogin />} />
         <Route path="/Favs" element={<Favspage updata={fun} cartdata={cartst} maincartdata={cartdata}/>} />
         <Route path="/cart" element={<Cartpage data={yes} nicedata={fun} />} />
+        <Route path="/AHome" element={<Adminhomepage />} />
+        <Route path="/Users" element={<Userspage />} />
       </Routes>
     </BrowserRouter>
     </>

@@ -4,6 +4,7 @@ import "../assets/Addbook.css"
 import {Link} from "react-router-dom"
 import { useState } from "react";
 import axios from "axios"
+import Adminheader from "../components/Adminheader";
 
 export default function Addbook()
 {
@@ -98,8 +99,9 @@ export default function Addbook()
 
     return (
 
-        <div id="con" className="h-100 w-100 d-flex justify-content-center align-items-center">
-            <div id="dets" className="d-flex">
+        <div className="h-100 w-100" style={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center"}}>
+
+            <div id="dets" className="d-flex" style={{height:560}}>
                 <div id="photo" className="h-100">
                     <div className="h-50 w-100 d-flex flex-column align-items-center">
                         <h4><b>Add New Product</b></h4>

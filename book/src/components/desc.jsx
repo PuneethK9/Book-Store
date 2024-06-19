@@ -115,7 +115,7 @@ export default function Desc({data,notdata,updata}){
                         </div>
 
                         <div id="des">
-                            <p>
+                            <p id="phidden">
                                 {
                                     (data) ? data.Description : "Loading"
                                 }
@@ -136,9 +136,15 @@ export default function Desc({data,notdata,updata}){
 
                                 <div id="descopt">
 
-                                    <select id="descsel" name="qty" onClick={chgclick}>
-                                        {opt}
-                                    </select>
+                                    {
+                                        (opt.length===0) ? <p style={{color:"red"}}>Not Available</p>
+                                        :
+                                        <select id="descsel" name="qty" onClick={chgclick}>
+
+                                            {opt}
+
+                                        </select>
+                                    }
 
                                 </div>
 
