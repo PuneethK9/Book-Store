@@ -72,6 +72,7 @@ const Cartschema={
 const Ordersschema={
     Userid:ObjectId,
     Amount:Number,
+    Status:Boolean,
     Date:String
 }
  
@@ -88,7 +89,7 @@ const Itemschema={
     Description:String,
     Orderid:ObjectId,
     Userid:ObjectId,
-    Price:Number
+    FinalPrice:Number
 }
 
 const Paymentschema={
@@ -133,6 +134,69 @@ function UserToken(req,res,next)
 
 
 // USER INTERFACE
+
+app.get("/orders",UserToken,async function(req,res){
+
+    try{
+
+        const userid = req.user.userid;
+
+        const data = await Order.aggregate([
+            {
+                $lookup:{
+                    from:"items",
+                    localField:"_id",
+                    foreignField:"Orderid",
+                    as:"news"
+                }
+            },
+            {
+                $match:{Userid:new ObjectId(userid)}
+            },
+            {
+                $unwind:"$news"
+            },
+            {
+                $group:{
+
+                    _id:{
+                        Orderid:"$_id",
+                        Bookid:"$news.Bookid"
+                    },
+                    Dt:{$first:"$Date"},
+                    Amt:{$first:"$Amount"},
+                    Sat:{$first:"$Status"},
+                    count:{$sum:1},
+                    subtotal:{$sum:"$news.FinalPrice"},
+                    dets:{$first:"$news"}
+                }
+            },
+            {
+                $group:{
+                    _id:"$_id.Orderid",
+                    Date:{$first:"$Dt"},
+                    Amount:{$first:"$Amt"},
+                    Status:{$first:"$Sat"},
+                    ct:{$sum:"$count"},
+                    tol:{$sum:"$subtotal"},
+                    news:{$push:{Book:"$dets",ct:{$sum:"$count"}}}
+                },
+            },
+            {
+                $sort:{"Date":-1}
+            }
+        ]);
+
+        //console.log(data[0].news);
+        //console.log("*");
+
+        return res.json({Data:data})
+    }
+    catch(err){
+        console.log("Error Fetching Order data");
+        console.log(err);
+    }
+})
 
 app.get("/rev",async function(req,res){
 
@@ -434,6 +498,85 @@ app.post("/rev",UserToken,async function(req,res){
     }
 })
 
+app.post("/order",UserToken,async function(req,res){
+
+    try{
+
+        const userid = req.user.userid;
+        const em = req.body.Email;
+        const data = req.body.Data;
+
+        if(em)
+        {
+            const chk = await User.findOne({Email:em});
+
+            if(chk._id==userid)
+            {
+                const neworder = new Order({
+                    Userid:userid,
+                    Amount:data.total-data.disct,
+                    Status:false,
+                    Date:(new Date().toLocaleString())
+                });
+
+                const val = await neworder.save();
+
+                const newpayment = new Payment({
+                    Orderid:val._id,
+                    Userid:userid,
+                    Amount:(data.total-data.disct),
+                    Date:(new Date().toLocaleString())
+                });
+
+                const val2 = await newpayment.save();
+
+                const wait = await Cart.find({Userid:userid}).countDocuments();
+
+                for(let i=0;i<wait;i++)
+                {
+                    const item = await Cart.findOne({Userid:userid});
+
+                    const book = await Book.findOne({_id:item.Bookid});
+
+                    const stock = book.Stock-1;
+
+                    const newitem = new Item({
+                        Bookid:item.Bookid,  
+                        Title:book.Title,
+                        Author:book.Author,
+                        Publisher:book.Publisher,
+                        Price:book.Price,
+                        Stock:book.Stock,
+                        Discount:book.Discount,
+                        Genre:book.Genre,
+                        Image:book.Image,
+                        Description:book.Description,
+                        Orderid:val._id,
+                        Userid:userid,
+                        FinalPrice:book.Price-book.Discount
+                    });
+
+                    const ok = await newitem.save();
+
+                    const bookupdate = await Book.updateOne({_id:book._id},{$set:{Stock:stock}});                  
+
+                    const del = await Cart.deleteOne({_id:item._id});
+                }
+
+                return res.json({message:"success"});
+
+            }
+            return res.json({message:"Invalid User"});
+        }
+        return res.json({message:"Null"});
+
+    }
+    catch(err){
+        console.log("Error Creating Order");
+        console.log(err);
+    }
+})
+
 app.put("/cart",UserToken,async function(req,res){
 
     try{
@@ -475,6 +618,23 @@ app.put("/cart",UserToken,async function(req,res){
         console.log(err);
     }
 
+})
+
+app.put("/status",UserToken,async function(req,res){
+
+    try{
+        
+        const orderid = req.body.status._id;
+
+        const val = await Order.updateOne({_id:orderid},{$set:{Status:true}});
+
+        return res.json({message:"success"});
+
+    }
+    catch(err){
+        console.log("Error updating status");
+        console.log(err);
+    }
 })
 
 app.delete("/Favs",UserToken,async function(req,res){
@@ -530,6 +690,34 @@ app.delete("/cart",UserToken,async function(req,res){
 
 
 // ADMIN INTERFACE
+
+app.get("/payment",async function(req,res){
+
+    try{
+
+        const data = await Order.aggregate([
+            {
+                $lookup:{
+                    from:"payments", // Foreign Table
+                    localField:"_id", //Attribute of Local Table // this and below should be same
+                    foreignField:"Orderid", // Attribute of Foreign Table
+                    as:"news"
+                }
+            },
+            {
+                $unwind:"$news"
+            }
+        ]);
+
+        //console.log(data);
+        return res.json({Data:data});
+
+    }
+    catch(err){
+        console.log("Error Fetching Payments");
+        console.log(err);
+    }
+})
 
 app.get("/users",async function(req,res){
 

@@ -28,6 +28,10 @@ import Viewform from "./components/Viewform"
 import Adminhomepage from "./pages/Adminhomepage"
 import Userspage from "./pages/Userspage"
 import Adding from "./pages/Adding"
+import Payments from "./components/Payments"
+import Adminpayments from "./components/Adminpayments"
+import Paymentspage from "./pages/Paymentspage"
+import Orders from "./components/Ordes"
 
 function App() {
 
@@ -48,7 +52,7 @@ function App() {
     <>
     <BrowserRouter>
       <Routes>
-        <Route path="/add" element={<Adding />} />
+        <Route path="/add" element={<Orders />} />
         <Route path="/store" element={<Storepage data={yes} updata={fun} cartdata={cartst} maincartdata={cartdata}/>} />
         <Route path="/desc/:id" element={<Descpage maindata={fun} updata={yes} nowdata={cartdata} />}  />
         <Route path="/URegister" element={<Register />} />
@@ -57,6 +61,7 @@ function App() {
         <Route path="/cart" element={<Cartpage data={yes} nicedata={fun} />} />
         <Route path="/AHome" element={<Adminhomepage />} />
         <Route path="/Users" element={<Userspage />} />
+        <Route path="/Payments" element={<Paymentspage />} />
       </Routes>
     </BrowserRouter>
     </>

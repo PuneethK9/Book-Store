@@ -108,8 +108,8 @@ export default function Allproducts(){
                                         <td id="proid">{item._id}</td>
                                         <td id="proname">{item.Title}</td>
                                         <td>{item.Stock}</td>
-                                        <td>{item.Price}</td>
-                                        <td>{item.Discount}</td>
+                                        <td>&#8377;{item.Price}</td>
+                                        <td>&#8377;{item.Discount}</td>
                                         <td id="allcenter">
                                             <div id="together">
                                                 

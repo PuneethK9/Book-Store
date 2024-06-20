@@ -3,12 +3,14 @@ import "../assets/cart.css"
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import Quantity from "./Quantity";
+import Payments from "./Payments";
 
 export default function Cart({updata}) 
 {
     const navigate = useNavigate();
     const [del,setdel] = useState(null);
     const [fav,setfav] = useState(null);
+    const [payst,setpayst] = useState(false);
     const [favstate,setfavstate] = useState(false);
     const [many,setmany] = useState({
         data:[],
@@ -22,7 +24,7 @@ export default function Cart({updata})
 
     if(many.ref)
     {
-        console.log("1");
+        //console.log("1");
 
         axios.get("http://localhost:4000/cart",{
             headers:{
@@ -60,7 +62,7 @@ export default function Cart({updata})
     
     useEffect(function(){
 
-        console.log("In request")
+        //console.log("In request")
 
         //if(del)
         //{
@@ -100,7 +102,7 @@ export default function Cart({updata})
                 }
             })
             .then((res)=>{
-                console.log(res);
+                //console.log(res); 
 
                 if(res.data.status==909)
                 {
@@ -118,6 +120,12 @@ export default function Cart({updata})
         }
 
     },[fav])
+
+    function revdata(data)
+    {
+        setpayst(false);
+        setmany(prev=>({...prev,ref:true}));
+    }
 
     return (
 
@@ -252,7 +260,7 @@ export default function Cart({updata})
                         </div>
 
                         <div id="cartpay">
-                            <button id="cartorder" type="button"><b>Place Order</b></button>
+                            <button onClick={()=>{setpayst(true)}} id="cartorder" type="button"><b>Place Order</b></button>
                         </div>
 
                     </div>
@@ -260,6 +268,10 @@ export default function Cart({updata})
                 </div>
 
             </div>
+
+            {
+                (payst) ? <Payments data={many} senddata={revdata} /> : ""
+            }
             
         </div>
 

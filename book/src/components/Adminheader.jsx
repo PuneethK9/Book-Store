@@ -19,9 +19,11 @@ export default function Adminheader()
                 
                         <Link style={{textDecoration:"none",color:"black"}} to={"/Users"} ><div id="hv"><label id="link">Users</label></div></Link>
                             
+                        <Link style={{textDecoration:"none",color:"black"}} to={"/Payments"} >
                         <div id="hv">
                             <label id="link">Payments</label>
                         </div>
+                        </Link>
 
                         <Link style={{textDecoration:"none",color:"black"}} to={"/Add"} ><div id="hv"><label id="link">Add Product</label></div></Link>
                         
