@@ -25,7 +25,7 @@ export default function Users()
 
         if(del)
         {
-            axios.put("http://localhost:4000/status",{del})
+            axios.put("http://localhost:4000/Ustatus",{del})
                 .then((res)=>{
                     console.log(res);
                     setref(!ref);

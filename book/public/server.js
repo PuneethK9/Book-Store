@@ -135,6 +135,59 @@ function UserToken(req,res,next)
 
 // USER INTERFACE
 
+app.get("/profile",UserToken,async function(req,res){
+
+    try{
+
+        const userid = req.user.userid;
+
+        const data = await User.findOne({_id:userid});
+
+        return res.json({Data:data});
+
+    }
+    catch(err){
+        console.log("Error Getting User Info");
+        console.log(err);
+    }
+})
+
+app.get("/Urev",UserToken,async function(req,res){
+
+    try{
+
+        const userid = req.user.userid;
+
+        const val = await Review.aggregate([
+            {
+                $lookup:{
+                    from:"books",
+                    localField:"Bookid",
+                    foreignField:"_id",
+                    as:"news"
+                }
+            },
+            {
+                $unwind:"$news"
+            },
+            {
+                $match:{
+                    Userid:new ObjectId(userid)
+                }
+            }
+        ]);
+
+        //console.log(val);
+
+        return res.json({Data:val});
+    }
+    catch(err){
+        console.log("Error getting User reviews");
+        console.log(err);
+    }
+
+})
+
 app.get("/orders",UserToken,async function(req,res){
 
     try{
@@ -387,10 +440,13 @@ app.post("/URegister",async function(req,res){
         })
 
         let val = await newUser.save();
-        return res.json();
+
+        const token = jwt.sign({userid:val._id,username:val.Firstname,role:"User",status:val.Status},jwtkey,{expiresIn:3600});
+        return res.json({token:token});
     }
     catch(err){
         console.log("Error Registering User");
+        console.log(err);
     }
 
 })
@@ -637,6 +693,27 @@ app.put("/status",UserToken,async function(req,res){
     }
 })
 
+app.put("/profile",UserToken,async function(req,res){
+
+    try{
+
+        const userid = req.user.userid;
+        const data = req.body.input;
+
+        const val = await User.updateOne({_id:userid},{$set:data});
+
+
+
+        return res.json({message:"success"});
+
+    }
+    catch(err){
+        console.log("Error Updating User data");
+        console.log(err);
+    }
+
+})
+
 app.delete("/Favs",UserToken,async function(req,res){
 
     try{
@@ -685,6 +762,23 @@ app.delete("/cart",UserToken,async function(req,res){
         console.log("Error Deleting Cart list");
         console.log(err);
     }
+})
+
+app.delete("/Urev",UserToken,async function(req,res){
+
+    try{
+
+        const userid = req.user.userid;
+        const revid = req.body.del._id;
+
+        const val  = await Review.deleteOne({_id:revid});
+
+        return res.json({message:"success"});
+    }
+    catch(err){
+        console.log("Error Deleting Review");
+        console.log(err);
+    }
 
 })
 
@@ -706,6 +800,9 @@ app.get("/payment",async function(req,res){
             },
             {
                 $unwind:"$news"
+            },
+            {
+                $sort:{Date:-1}
             }
         ]);
 
@@ -787,7 +884,7 @@ app.put("/book",async function(req,res){
 
 })
 
-app.put("/status",async function(req,res){
+app.put("/Ustatus",async function(req,res){
 
     try{
         

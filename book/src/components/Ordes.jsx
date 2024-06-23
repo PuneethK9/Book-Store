@@ -124,7 +124,7 @@ export default function Orders()
 
                                                      <div id="rytside">
 
-                                                        <div id="rytcon">
+                                                        <div id="rytcon" style={{paddingLeft:10}}>
 
                                                             <div id="carttitle">
 

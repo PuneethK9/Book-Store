@@ -32,6 +32,12 @@ import Payments from "./components/Payments"
 import Adminpayments from "./components/Adminpayments"
 import Paymentspage from "./pages/Paymentspage"
 import Orders from "./components/Ordes"
+import Userreviews from "./components/Userreviews"
+import Userprofile from "./components/Userprofile"
+import Userside from "./components/Userside"
+import UserOrderspage from "./pages/UserOrderspage"
+import Userprofilepage from "./pages/UserProfilepage"
+import UserReviewpage from "./pages/UserReviewspage"
 
 function App() {
 
@@ -52,7 +58,7 @@ function App() {
     <>
     <BrowserRouter>
       <Routes>
-        <Route path="/add" element={<Orders />} />
+        <Route path="/add" element={<Adding />} />
         <Route path="/store" element={<Storepage data={yes} updata={fun} cartdata={cartst} maincartdata={cartdata}/>} />
         <Route path="/desc/:id" element={<Descpage maindata={fun} updata={yes} nowdata={cartdata} />}  />
         <Route path="/URegister" element={<Register />} />
@@ -62,6 +68,9 @@ function App() {
         <Route path="/AHome" element={<Adminhomepage />} />
         <Route path="/Users" element={<Userspage />} />
         <Route path="/Payments" element={<Paymentspage />} />
+        <Route path="/UOrders" element={<UserOrderspage />}></Route>
+        <Route path="/UProfile" element={<Userprofilepage />}></Route>
+        <Route path="/UReviews" element={<UserReviewpage />}></Route>
       </Routes>
     </BrowserRouter>
     </>

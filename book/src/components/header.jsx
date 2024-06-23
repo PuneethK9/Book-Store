@@ -84,6 +84,8 @@ export default function Header({data,negdata,cartdata,cartupdata}){
                                 <label id="link"><span onClick={cartclick} id="icons" className="material-symbols-outlined">shopping_cart</span></label>
                             </div>
                         </Link>
+
+                        <Link to="/UOrders" style={{textDecoration:"none",color:"black"}}>
                         <div id="hv">
                             <label id="link">
                                 <span id="icons" className="material-symbols-outlined">account_circle</span>
@@ -94,6 +96,10 @@ export default function Header({data,negdata,cartdata,cartupdata}){
                                 </span>
                             </label>
                         </div>
+                        </Link>
+
+
+
                     </div>
 
                 </div>

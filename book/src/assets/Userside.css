@@ -1,0 +1,66 @@
+#Userside{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+#Userdetcon{
+    width: 500px;
+    height: 650px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#accicon{
+    width: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#accname{
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#Usernamediv{
+    width: 100%;
+    height: 20%;
+    background-color: white;
+    display: flex;
+    border: 1px solid #f6f6f6;
+}
+
+#Userop{
+    width: 100%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+
+#Usersame{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight:600;
+    border: 1px solid #f6f6f6;
+}
+
+#Usersame:hover{
+    background-color: rgba(0,0,0,0.03);
+    cursor: pointer;
+}
+
+label:hover{
+    cursor: pointer;
+}
