@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "../assets/filters.css"
+import Price from "./Price";
 
-export default function Filters({Authordata,Genredata}){
+export default function Filters({pridata,Pubdata,Authordata,Genredata}){
 
     const [open1,setopen1] = useState(true);
     const [open2,setopen2] = useState(true);
@@ -10,6 +11,8 @@ export default function Filters({Authordata,Genredata}){
     
     const [Author,setAuthor] = useState([]);
     const [Genre,setGenre] = useState([]);
+    const [Pub,setPub] = useState([]);
+    const [pri,setpri] = useState([]);
 
     useEffect(function(){
         Authordata(Author);
@@ -18,6 +21,18 @@ export default function Filters({Authordata,Genredata}){
     useEffect(function(){
         Genredata(Genre);
     },[Genre]);
+
+    useEffect(function(){
+        Pubdata(Pub);
+    },[Pub]);
+
+    useEffect(function(){
+        pridata(pri);
+    },[pri]);
+    
+    function fun(data){
+        setpri(data);
+    }
 
     function authorchg(e){
 
@@ -39,6 +54,17 @@ export default function Filters({Authordata,Genredata}){
         setGenre([...Genre,value])
         else
         setGenre(Genre.filter(i=>i!==value));
+    }
+
+    function Pubchg(e){
+
+        const value = e.target.value;
+        const chk = e.target.checked;
+
+        if(chk)
+        setPub([...Pub,value])
+        else
+        setPub(Pub.filter(i=>i!==value));
     }
 
     function clk1(){
@@ -144,8 +170,28 @@ export default function Filters({Authordata,Genredata}){
                             </button>
 
                             <div id="content" style={{display:(open3)? 'block':'none'}}>
-                                <p>wastefellow</p>
+
+                                <label className="d-flex align-items-center" >
+                                    <input name="" onClick={Pubchg} value="Pottermore" id="cks" type="checkbox"></input>
+                                    <span>Pottermore</span>
+                                </label>
+
+                                <label className="d-flex align-items-center" >
+                                    <input name="" onClick={Pubchg} value="Penguin Random" id="cks" type="checkbox"></input>
+                                    <span>Penguin Random</span>
+                                </label>
+
+                                <label className="d-flex align-items-center">
+                                    <input onClick={Pubchg} value="Harper Collins" id="cks" type="checkbox"></input>
+                                    <span>Harper Collins</span>
+                                </label>
+
+                                <label className="d-flex align-items-center">
+                                    <input onClick={Pubchg} value="Macmillan" id="cks" type="checkbox"></input>
+                                    <span>Macmillan</span>
+                                </label>
                             </div>
+
                         </div>
 
                         <div id="acc">
@@ -159,7 +205,7 @@ export default function Filters({Authordata,Genredata}){
                             </button>
 
                             <div id="content" style={{display:(open4)? 'block':'none'}}>
-                                <p>wastefellow</p>
+                                <Price Pricedata={fun} />
                             </div>
                         </div>
 

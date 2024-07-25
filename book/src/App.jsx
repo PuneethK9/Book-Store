@@ -38,6 +38,7 @@ import Userside from "./components/Userside"
 import UserOrderspage from "./pages/UserOrderspage"
 import Userprofilepage from "./pages/UserProfilepage"
 import UserReviewpage from "./pages/UserReviewspage"
+import Price from "./components/Price"
 
 function App() {
 

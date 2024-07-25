@@ -384,6 +384,14 @@ app.post("/store",async function(req,res){
         filter.Author = query.Author;
         if(query.Genre)
         filter.Genre = {$in : query.Genre};
+        if(query.Publisher)
+        filter.Publisher = query.Publisher;
+        if(query.Price)
+        {
+            const min = query.Price[0];
+            const max = query.Price[1];
+            filter.Price = {$gte : min, $lte : max};
+        }
 
         const data = await Book.find(filter);
         //console.log(filter);

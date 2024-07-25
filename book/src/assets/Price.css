@@ -1,0 +1,28 @@
+
+#pricecont{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#pricemain{
+    height: 90%;
+    width: 90%;
+    background-color: skyblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#pricebtn{
+    display: flex;
+    justify-content: space-between;
+}
+
+#pbtn{
+    width: 110px;
+    height: 30px;
+    border: 2px solid #f6f6f6;
+    font-size: 0.9rem;
+}

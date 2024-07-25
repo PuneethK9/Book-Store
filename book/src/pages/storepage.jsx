@@ -42,6 +42,28 @@ export default function Storepage({data,updata,cartdata,maincartdata}){
         }
     }
 
+    function Pdata(data){
+
+        if(data.length>0)
+        setqy({...qy,Publisher:data});
+        else
+        {
+            const {Publisher,...rest} = qy;
+            setqy({...rest});
+        }
+    }
+
+    function hdata(data){
+
+        if(data.length>0)
+        setqy({...qy,Price:data});
+        else
+        {
+            const {Price,...rest} = qy;
+            setqy({...rest});
+        }
+    }
+
     function nicedata(data)
     {
         updata(data);
@@ -66,7 +88,7 @@ export default function Storepage({data,updata,cartdata,maincartdata}){
                 <div id="mai">
 
                     <div id="fillcol">
-                        <Filters Authordata={Audata} Genredata={Gdata} />
+                        <Filters pridata={hdata} Pubdata={Pdata} Authordata={Audata} Genredata={Gdata} />
                     </div>
 
 
