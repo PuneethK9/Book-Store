@@ -1,8 +1,39 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Adminheader()
 {
+    const [Auth,setAuth] = useState("");
+
+    useEffect(()=>{
+
+        axios.get("http://localhost:4000/AProfile",{
+            headers:{
+                token:localStorage.getItem("token")
+            }
+        })
+        .then((res)=>{
+            console.log(res);
+
+            if(res.data.status==909)
+            {
+                localStorage.clear();
+            }
+            else if(res.data.status==501 || res.data.status==502)
+            {
+
+            }
+            else
+            setAuth(res.data.user.username);
+
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+
+    },[]);
+
     return (
 
         <div className="h-100 w-100">
@@ -32,7 +63,7 @@ export default function Adminheader()
                                 <span id="icons" className="material-symbols-outlined">account_circle</span>
                                 <span id="us">
                                     {
-                                        (""=="")? ("Sign In"):(Auth)
+                                        (Auth=="")? ("Sign In"):(Auth)
                                     }
                                 </span>
                             </label>

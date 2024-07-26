@@ -39,6 +39,9 @@ import UserOrderspage from "./pages/UserOrderspage"
 import Userprofilepage from "./pages/UserProfilepage"
 import UserReviewpage from "./pages/UserReviewspage"
 import Price from "./components/Price"
+import Error from "./components/Error"
+import AdminLogin from "./pages/AdminLogin"
+import AdminRegister from "./pages/AdminRegister"
 
 function App() {
 
@@ -72,6 +75,8 @@ function App() {
         <Route path="/UOrders" element={<UserOrderspage />}></Route>
         <Route path="/UProfile" element={<Userprofilepage />}></Route>
         <Route path="/UReviews" element={<UserReviewpage />}></Route>
+        <Route path="/ALogin" element={<AdminLogin />} ></Route>
+        <Route path="/ARegister" element={<AdminRegister />} ></Route>
       </Routes>
     </BrowserRouter>
     </>

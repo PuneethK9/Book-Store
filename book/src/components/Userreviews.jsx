@@ -25,6 +25,8 @@ export default function Userreviews()
                 localStorage.clear();
                 return navigate("/ULogin");
             }
+            if(res.data.status==501 || res.data.status==502)
+            return;
             setdata(res.data.Data);
         })
         .catch((err)=>{

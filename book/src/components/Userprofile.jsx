@@ -26,6 +26,8 @@ export default function Userprofile()
                 localStorage.clear();
                 return navigate("/ULogin");
             }
+            if(res.data.status==501 || res.data.status==502)
+                return;
             setinput(res.data.Data);
         })
 
@@ -60,6 +62,8 @@ export default function Userprofile()
                 localStorage.clear();
                 return navigate("/ULogin");
             }
+            if(res.data.status==501 || res.data.status==502)
+                return;
             seteditst(!editst);
             settruest(false);
             setref(!ref);

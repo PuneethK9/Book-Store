@@ -1,21 +1,37 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Adminpayments()
 {
     const [data,setdata] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(()=>{
 
-        axios.get("http://localhost:4000/payment")
-            .then((res)=>{
-                console.log(res);
-                setdata(res.data.Data);
-            })
-            .catch((err)=>{
-                console.log("Error Fetching Payments");
-                console.log(err);
-            })
+        axios.get("http://localhost:4000/payment",{
+            headers:{
+                token:localStorage.getItem("token")
+            }
+        })
+        .then((res)=>{
+            console.log(res);
+
+            if(res.data.status==909)
+            {
+                localStorage.clear();
+                return navigate("/ALogin");
+            }
+
+            if(res.data.status==501 || res.data.status==502)
+            return;
+
+            setdata(res.data.Data);
+        })
+        .catch((err)=>{
+            console.log("Error Fetching Payments");
+            console.log(err);
+        })
 
     },[]);
 

@@ -4,7 +4,7 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom";
 import Book from "../assets/Book.png"
 
-export default function UserLogin()
+export default function AdminLogin()
 {
     const navigate = useNavigate();
 
@@ -33,12 +33,12 @@ export default function UserLogin()
             Password:input.Password
         }
 
-        axios.post("http://localhost:4000/ULogin",data)
+        axios.post("http://localhost:4000/ALogin",data)
             .then(res=>{
                 console.log(res);
                 //localStorage.clear();
                 localStorage.setItem("token",res.data.token);
-                navigate("/store")
+                navigate("/Ahome")
             })
             .catch(err=>{
                 console.log(err);

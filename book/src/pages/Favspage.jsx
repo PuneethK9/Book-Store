@@ -5,6 +5,7 @@ import "../assets/Favspage.css"
 import Favs from "../components/favs";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Error from "../components/Error";
 
 
 export default function Favspage({updata,cartdata,maincartdata})
@@ -30,6 +31,37 @@ export default function Favspage({updata,cartdata,maincartdata})
         setcartst(data);
         maincartdata(data);
     }
+
+    const [err,seterr] = useState({
+        status:false,
+        nbr:0,
+        data:"",
+    });
+
+    useEffect(()=>{
+
+        axios.get("http://localhost:4000/store",{
+            headers:{
+                token:localStorage.getItem("token")
+            }
+        })
+        .then((res)=>{
+            console.log(res);
+
+            if(res.data.status==501 || res.data.status==502)
+            {
+                seterr({status:true,nbr:res.data.status,data:res.data.Auth});
+                return;
+            }
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+
+    },[]);
+
+    if(err.status)
+    return (<Error nbr={err.nbr} data={err.data} />);
 
     return (
 

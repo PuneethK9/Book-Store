@@ -33,6 +33,8 @@ export default function Payments({data,senddata})
                     localStorage.clear();
                     return navigate("/ULogin");
                 }
+                if(res.data.status==501 || res.data.status==502)
+                    return;
                 senddata(false);
             })
             .catch((err)=>{

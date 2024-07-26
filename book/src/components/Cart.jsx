@@ -38,6 +38,8 @@ export default function Cart({updata})
                 localStorage.clear();
                 return navigate("/ULogin");
             }
+            if(res.data.status==501 || res.data.status==502)
+                return;
 
             let val=0,tol=0,dis=0;
             for(let i=0;i<res.data.data.length;i++)
@@ -82,6 +84,8 @@ export default function Cart({updata})
                     localStorage.clear();
                     return navigate("/ULogin");
                 }
+                if(res.data.status==501 || res.data.status==502)
+                    return;
                 setmany(prev=>({...prev,ref:true}));
             })
             .catch((err)=>{
@@ -109,6 +113,8 @@ export default function Cart({updata})
                     localStorage.clear();
                     return navigate("/ULogin");
                 }
+                if(res.data.status==501 || res.data.status==502)
+                    return;
                 setmany(prev=>({...prev,ref:true}));
             })
             .catch((err)=>{

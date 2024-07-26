@@ -38,6 +38,8 @@ export default function Desc({data,notdata,updata}){
                 localStorage.clear();
                 return navigate("/ULogin");
             }
+            if(res.data.status==501 || res.data.status==502)
+                return;
         })
         .catch(err=>{
             console.log("Error sending Favourite requests");
@@ -63,6 +65,8 @@ export default function Desc({data,notdata,updata}){
                 localStorage.clear();
                 return navigate("/ULogin");
             }
+            if(res.data.status==501 || res.data.status==502)
+                return;
         }))
         .catch((err=>{
             console.log("Error Adding to Cart");

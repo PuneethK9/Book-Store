@@ -31,6 +31,10 @@ export default function Header({data,negdata,cartdata,cartupdata}){
 
                 if(res.data.status==909)
                 localStorage.clear();
+                else if(res.data.status==501 || res.data.status==502)
+                {
+
+                }
                 else
                 setAuth(res.data.User.username);
  

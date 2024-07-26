@@ -43,6 +43,8 @@ export default function Quantity({data,refdata})
                 localStorage.clear();
                 return navigate("/ULogin");
             }
+            if(res.data.status==501 || res.data.status==502)
+                return;
             setref(true);
             //console.log("now");
         })

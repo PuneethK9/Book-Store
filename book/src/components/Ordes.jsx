@@ -26,6 +26,8 @@ export default function Orders()
                 localStorage.clear();
                 return navigate("/ULogin")
             }
+            if(res.data.status==501 || res.data.status==502)
+                return;
             setdata(res.data.Data);
         })
         .catch((err)=>{
@@ -52,6 +54,8 @@ export default function Orders()
                     localStorage.clear();
                     return navigate("/ULogin");
                 }
+                if(res.data.status==501 || res.data.status==502)
+                    return;
                 setstatus(null);
                 setref(!ref);
             })

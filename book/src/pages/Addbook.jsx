@@ -1,7 +1,7 @@
 import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "../assets/Addbook.css"
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 import { useState } from "react";
 import axios from "axios"
 import Adminheader from "../components/Adminheader";
@@ -22,6 +22,7 @@ export default function Addbook()
     const [nice,setnice] = useState("");
     const [val,setval] = useState(false);
     const [err,seterr] = useState();
+    const navigate = useNavigate();
 
 
     function handleImageChange(event){
@@ -65,36 +66,38 @@ export default function Addbook()
 
         console.log(err);
 
-        axios.post('http://localhost:4000/add',data)
-            .then(function(res){
-                console.log(res);
+        axios.post('http://localhost:4000/add',data,{
+            headers:{
+                token:localStorage.getItem("token")
+            }
+        })
+        .then(function(res){
+            console.log(res);
 
-                /*
-                seterr(
-                        <div>
-                            <div id="toast">
-                                Book Added
-                                <div><b>X</b></div>
-                            </div>
-                        </div>    
-                )
-                */
+            if(res.data.status==909)
+            {
+                localStorage.clear();
+                return navigate("/ALogin")
+            }
 
-                seterr(
-                    <div class="alert alert-success d-flex align-items-center" role="alert" id="toast">
-                        <div>
-                            <b>New Book Added</b>
-                        </div>
+            if(res.data.status==501 || res.data.status==502)
+            return;
+
+            seterr(
+                <div class="alert alert-success d-flex align-items-center" role="alert" id="toast">
+                    <div>
+                        <b>New Book Added</b>
                     </div>
-                )
+                </div>
+            )
 
-                setTimeout(function(){
-                    seterr(null)
-                },2000);
-            })
-            .catch(err=>{
-                console.log(err);
-            })
+            setTimeout(function(){
+                seterr(null)
+            },2000);
+        })
+        .catch(err=>{
+            console.log(err);
+        })
     }
 
     return (

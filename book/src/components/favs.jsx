@@ -3,6 +3,7 @@ import "../assets/favs.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Quantity from "./Quantity";
+import Error from "./Error";
 
 
 export default function Favs({cartdata})
@@ -17,8 +18,6 @@ export default function Favs({cartdata})
 
     if(now)
     {
-        console.log(localStorage.getItem('token'));
-
         //if(!(localStorage.getItem('token')))
         //return navigate("/ULogin");
             
@@ -35,6 +34,10 @@ export default function Favs({cartdata})
                 localStorage.clear();
                 return navigate("/ULogin");
             }
+
+            if(res.data.status==501 || res.data.status==502)
+            return;
+        
             setdata(res.data.data);
         })
         .catch(err=>{
@@ -65,6 +68,8 @@ export default function Favs({cartdata})
                     localStorage.clear();
                     return navigate("/ULogin");
                 }
+                if(res.data.status==501 || res.data.status==502)
+                return;
                 setnow(true);
             })
             .catch(err=>{
@@ -90,6 +95,8 @@ export default function Favs({cartdata})
                     localStorage.clear();
                     return navigate("/ULogin");
                 }
+                if(res.data.status==501 || res.data.status==502)
+                return;
             })
             .catch((err)=>{
                 console.log("Error Adding to Cart from Favourites");

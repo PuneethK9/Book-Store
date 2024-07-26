@@ -1,23 +1,39 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Users()
 {
     const [users,setusers] = useState([]);
     const [del,setdel] = useState(null);
     const [ref,setref] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(()=>{
 
-        axios.get("http://localhost:4000/users")
-            .then((res)=>{
-                //console.log(res);
-                setusers(res.data.data);
-            })
-            .catch((err)=>{
-                console.log("Error Getting Users");
-                console.log(err);
-            })
+        axios.get("http://localhost:4000/users",{
+            headers:{
+                token:localStorage.getItem("token")
+            }
+        })
+        .then((res)=>{
+            console.log(res);
+
+            if(res.data.status==909)
+            {
+                localStorage.clear();
+                return navigate("/ALogin")
+            }
+
+            if(res.data.status==501 || res.data.status==502)
+            return;
+
+            setusers(res.data.data);
+        })
+        .catch((err)=>{
+            console.log("Error Getting Users");
+            console.log(err);
+        })
 
     },[ref]);
 
@@ -25,16 +41,30 @@ export default function Users()
 
         if(del)
         {
-            axios.put("http://localhost:4000/Ustatus",{del})
-                .then((res)=>{
-                    console.log(res);
-                    setref(!ref);
-                    setdel(null);
-                })
-                .catch((err)=>{
-                    console.log("Error Blocking User");
-                    console.log(err);
-                })
+            axios.put("http://localhost:4000/Ustatus",{del},{
+                headers:{
+                    token:localStorage.getItem("token")
+                }
+            })
+            .then((res)=>{
+                console.log(res);
+
+                if(res.data.status==909)
+                {
+                    localStorage.clear();
+                    return navigate("/ALogin")
+                }
+    
+                if(res.data.status==501 || res.data.status==502)
+                return;
+            
+                setref(!ref);
+                setdel(null);
+            })
+            .catch((err)=>{
+                console.log("Error Blocking User");
+                console.log(err);
+            })
         }
 
     },[del]);

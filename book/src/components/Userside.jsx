@@ -24,6 +24,8 @@ export default function Userside()
                 localStorage.clear();
                 return navigate("/ULogin");
             }
+            if(res.data.status==501 || res.data.status==502)
+            return;
             setuser(res.data.Data);
         })
         .catch((err)=>{

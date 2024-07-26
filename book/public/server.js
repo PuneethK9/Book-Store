@@ -125,10 +125,10 @@ function UserToken(req,res,next)
         if(req.user.role==="User")
         {
             if(!req.user.status)
-            return res.json({Auth:"User Blocked"});
+            return res.json({Auth:"User Blocked",status:501});
             return next();
         }
-        return res.json({Auth:"UnAuthorised Access"});
+        return res.json({Auth:"UnAuthorised Access",status:502});
     })
 }
 
@@ -793,7 +793,46 @@ app.delete("/Urev",UserToken,async function(req,res){
 
 // ADMIN INTERFACE
 
-app.get("/payment",async function(req,res){
+function AdminToken(req,res,next)
+{
+    const token = req.headers.token;
+
+    jwt.verify(token,jwtkey,function(err,user){
+
+        if(err){
+            console.log(err);
+            return res.json({Auth:"",status:909});
+        }
+        req.user=user;
+
+        if(req.user.role==="Admin")
+        return next();
+        return res.json({Auth:"UnAuthorised Access",status:502});
+    })
+
+}
+
+app.get("/AProfile",AdminToken,async function(req,res){
+
+    try {
+
+        const admid = req.user.userid;
+
+        const data = await Admin.findOne({_id:admid});
+
+        if(data)
+        return res.json({message:"success",user:req.user});
+
+        return res.json({message:"Admin Not Found"});
+    }
+    catch(err){
+        console.log(err);
+        console.log("Error Getting Admin Profile");
+    }
+})
+
+
+app.get("/payment",AdminToken,async function(req,res){
 
     try{
 
@@ -824,7 +863,7 @@ app.get("/payment",async function(req,res){
     }
 })
 
-app.get("/users",async function(req,res){
+app.get("/users",AdminToken,async function(req,res){
 
     try{
 
@@ -839,7 +878,55 @@ app.get("/users",async function(req,res){
 
 })
 
-app.post("/add",async function(req,res){
+app.post("/ALogin",async function(req,res){
+
+    const em = req.body.Email;
+    const pass = req.body.Password;
+
+    try{
+
+        const adm = await Admin.findOne({Email:em});
+
+        if(adm && adm.Password==pass)
+        {
+            const token = jwt.sign({userid:adm._id,username:adm.Firstname,role:"Admin"},jwtkey,{expiresIn:3600});
+            return res.json({token:token});
+        }
+        console.log("Admin not present / password doesn't match");
+        return res.json({message:"Admin Does not Exist"});
+    }
+    catch(err){
+        console.log(err);
+        console.log("Error Logging User");
+    }
+})
+
+app.post("/ARegister",async function(req,res){
+
+    try{
+
+        const newadmin = new Admin({
+            Firstname:req.body.Firstname,
+            Lastname:req.body.Lastname,
+            Gender:req.body.Gender,
+            Email:req.body.Email,
+            Phonenumber:req.body.Phonenumber,
+            Address:req.body.Address,
+            Password:req.body.Password
+        });
+
+        const val = await newadmin.save();
+
+        const token = jwt.sign({userid:val._id,username:val.Firstname,role:"Admin"},jwtkey,{expiresIn:3600});
+        return res.json({message:val,token:token});
+    }
+    catch(err){
+        console.log(err);
+        console.log("Error Registering Admin");
+    }
+})
+
+app.post("/add",AdminToken,async function(req,res){
     const title = req.body.Title;
     const author = req.body.Author;
     const genre = req.body.Genre;
@@ -871,7 +958,7 @@ app.post("/add",async function(req,res){
     }
 })
 
-app.put("/book",async function(req,res){
+app.put("/book",AdminToken,async function(req,res){
 
     try{
 
@@ -892,7 +979,7 @@ app.put("/book",async function(req,res){
 
 })
 
-app.put("/Ustatus",async function(req,res){
+app.put("/Ustatus",AdminToken,async function(req,res){
 
     try{
         
@@ -914,7 +1001,7 @@ app.put("/Ustatus",async function(req,res){
     }
 })
 
-app.delete("/book",async function(req,res){
+app.delete("/book",AdminToken,async function(req,res){
 
     try{
 

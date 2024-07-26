@@ -4,6 +4,8 @@ import Header from "../components/header.jsx"
 import Store from "../components/store.jsx"
 import Filters from "../components/filters.jsx"
 import Footer from "../components/footer.jsx"
+import Error from "../components/Error.jsx";
+import axios from "axios";
 
 
 export default function Storepage({data,updata,cartdata,maincartdata}){
@@ -74,6 +76,37 @@ export default function Storepage({data,updata,cartdata,maincartdata}){
         setcartst(data);
         maincartdata(data);
     }
+
+    const [err,seterr] = useState({
+        status:false,
+        nbr:0,
+        data:"",
+    });
+
+    useEffect(()=>{
+
+        axios.get("http://localhost:4000/store",{
+            headers:{
+                token:localStorage.getItem("token")
+            }
+        })
+        .then((res)=>{
+            console.log(res);
+
+            if(res.data.status==501 || res.data.status==502)
+            {
+                seterr({status:true,nbr:res.data.status,data:res.data.Auth});
+                return;
+            }
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+
+    },[]);
+
+    if(err.status)
+    return (<Error nbr={err.nbr} data={err.data} />);
 
     return (
 

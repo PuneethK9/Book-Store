@@ -28,6 +28,8 @@ export default function Reviewform({data,updata})
                     localStorage.clear();
                     return navigate("/ULogin");
                 }
+                if(res.data.status==501 || res.data.status==502)
+                    return;
                 updata(false);
             })
             .catch((err)=>{
