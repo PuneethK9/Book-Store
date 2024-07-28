@@ -3,6 +3,7 @@ import Adminheader from "../components/Adminheader";
 import Allproducts from "../components/Allproducts";
 import axios from "axios";
 import Error from "../components/Error";
+import { useNavigate } from "react-router-dom";
 
 export default function Adminhomepage()
 {
@@ -11,6 +12,8 @@ export default function Adminhomepage()
         nbr:0,
         data:"",
     });
+
+    const navigate = useNavigate();
 
     useEffect(()=>{
 
@@ -21,6 +24,12 @@ export default function Adminhomepage()
         })
         .then((res)=>{
             console.log(res);
+
+            if(res.data.status==909)
+            {
+                localStorage.clear();
+                return navigate("/ALogin");
+            }
 
             if(res.data.status==501 || res.data.status==502)
             {

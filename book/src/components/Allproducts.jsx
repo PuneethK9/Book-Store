@@ -57,6 +57,9 @@ export default function Allproducts(){
         if(data)
         {
             axios.delete("http://localhost:4000/book",{
+                headers:{
+                    token:localStorage.getItem("token")
+                },
                 data :{
                     del
                 }

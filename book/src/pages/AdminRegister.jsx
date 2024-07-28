@@ -100,7 +100,7 @@ export default function AdminRegister(){
             <div class="flex-container_a">
                 <div class="flex-left_a">
                     <div style={{height:"60%"}} class="flex-left-inside_a">
-                        <img src="https://img.freepik.com/free-vector/read-books-design_24877-49600.jpg"></img>
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLfgFJWbAVMoKKGw40jMvpdPW3leryDi7TVQ&s"></img>
                     </div>
                 </div>
                 <div class="flex-right_a">
@@ -163,7 +163,7 @@ export default function AdminRegister(){
 
                         <form action="">
                             <button onClick={handleclick} type="button" style={{backgroundColor:"blueviolet"}} className="btn text-white">Register</button>
-                            <button onClick={()=>{navigate("/ULogin")}} type="button" style={{marginLeft:20}} className="btn text-white bg-danger">Log In</button>
+                            <button onClick={()=>{navigate("/ALogin")}} type="button" style={{marginLeft:20}} className="btn text-white bg-danger">Log In</button>
                         </form>
                     </div>
 

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../assets/Updateform.css"
 import axios from "axios";
 import Confirmation from "./Confirmation";
+import { useNavigate } from "react-router-dom";
 
 export default function Updateform({data,updata,refdata})
 {
@@ -17,6 +18,8 @@ export default function Updateform({data,updata,refdata})
         Publisher:"Me"
     }
     */
+
+    const navigate = useNavigate();
 
     const [input,setinput] = useState({
         _id:(data)?data._id:"",
@@ -61,16 +64,30 @@ export default function Updateform({data,updata,refdata})
     {
         if(data)
         {
-            axios.put("http://localhost:4000/book",{input})
-                .then((res)=>{
-                    console.log(res);
-                    refdata(true);
-                    updata(false);
-                })
-                .catch((err)=>{
-                    console.log("Error Updating Data")
-                    console.log(err);
-                })
+            axios.put("http://localhost:4000/book",{input},{
+                headers:{
+                    token:localStorage.getItem("token")
+                }
+            })
+            .then((res)=>{
+                console.log(res);
+
+                if(res.data.status==909)
+                {
+                    localStorage.clear();
+                    return navigate("/ALogin")
+                }
+
+                if(res.data.status==501 || res.data.status==502)
+                return;
+
+                refdata(true);
+                updata(false);
+            })
+            .catch((err)=>{
+                console.log("Error Updating Data")
+                console.log(err);
+            })
         }
         setconfirm(false);
     }

@@ -53,7 +53,7 @@ export default function AdminLogin()
             <div className="flex-container_a">
                 <div className="flex-left_a">
                     <div style={{height:"70%"}} className="flex-left-inside_a">
-                        <img src={Book}></img>
+                        <img src={"https://us.123rf.com/450wm/surfupvector/surfupvector2204/surfupvector220400089/184337275-office-worker-talking-on-phone-flat-vector-illustration-male-manager-sitting-at-desk-and-talking-on.jpg?ver=6"}></img>
                     </div>
                 </div>
                 <div className="flex-right_a">
@@ -81,7 +81,7 @@ export default function AdminLogin()
                         <br></br>
                         <form action="" style={{display:"flex",alignItems:"center"}}>
                             <button onClick={handleclick} id="login_a" type="submit">Log in</button>
-                            <button onClick={()=>{navigate("/URegister")}} style={{marginLeft:20,height:44}} type="button" className="btn btn-danger">Register</button>
+                            <button onClick={()=>{navigate("/ARegister")}} style={{marginLeft:20,height:44}} type="button" className="btn btn-danger">Register</button>
                         </form>
                         <br></br>
                         <br></br>

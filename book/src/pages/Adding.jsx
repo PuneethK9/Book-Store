@@ -3,9 +3,12 @@ import Adminheader from "../components/Adminheader";
 import Addbook from "./Addbook";
 import axios from "axios";
 import Error from "../components/Error";
+import { useNavigate } from "react-router-dom";
 
 export default function Adding()
 {
+    const navigate = useNavigate();
+
     const [err,seterr] = useState({
         status:false,
         nbr:0,
@@ -21,6 +24,12 @@ export default function Adding()
         })
         .then((res)=>{
             console.log(res);
+
+            if(res.data.status==909)
+            {
+                localStorage.clear();
+                return navigate("/ALogin");
+            }
 
             if(res.data.status==501 || res.data.status==502)
             {
