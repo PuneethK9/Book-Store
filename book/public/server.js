@@ -110,7 +110,7 @@ const Payment = new mongoose.model("Payment",Paymentschema);
 
 function UserToken(req,res,next)
 {
-    //console.log(req.headers);
+    
 
     const token = req.headers.token;
 
