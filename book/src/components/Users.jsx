@@ -47,7 +47,7 @@ export default function Users()
                 }
             })
             .then((res)=>{
-                console.log(res);
+                
 
                 if(res.data.status==909)
                 {
