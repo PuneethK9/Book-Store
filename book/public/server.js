@@ -996,7 +996,7 @@ app.put("/Ustatus",AdminToken,async function(req,res){
         return res.json({message:"Null"});
     }
     catch(err){
-        console.log("Error Blocking User");
+        console.log("Error Blocking");
         console.log(err);
     }
 })
