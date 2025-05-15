@@ -68,6 +68,7 @@ export default function Header({data,negdata,cartdata,cartupdata}){
 
                     <div id="lks">
                         <div id="hv"><label id="link">Home</label></div>
+                        
                         <Link style={{textDecoration:"none",color:"black"}} to="/store"><div id="hv"><label id="link">Store</label></div></Link>
 
                         <Link style={{textDecoration:"none",color:"black"}} to="/Favs">
